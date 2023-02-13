@@ -2,7 +2,7 @@ name: ubuntu1804
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - Vagrantfile.ubuntu1804
       - .github/workflows/ubuntu1804.yml

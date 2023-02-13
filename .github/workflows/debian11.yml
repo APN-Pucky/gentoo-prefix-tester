@@ -2,7 +2,7 @@ name: debian11
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - Vagrantfile.debian11
       - .github/workflows/debian11.yml
