@@ -31,4 +31,4 @@ jobs:
       run: vagrant up
 
     - name: ssh into box after boot
-      run: vagrant ssh -c 'sudo apt-get install -y build-essential && wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive'
+      run: vagrant ssh -c 'sudo apt-get update && sudo apt-get install -y build-essential && wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive'
