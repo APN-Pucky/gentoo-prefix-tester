@@ -6,6 +6,7 @@ jobs:
   vagrant-up:
     runs-on: macos-12
     strategy:
+      fail-fast: false
       matrix:
         VAGRANTFILE: [Vagrantfile.ubuntu1804,Vagrantfile.ubuntu2204, Vagrantfile.debian11]
 
