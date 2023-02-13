@@ -1,4 +1,4 @@
-name: vagrant-up
+name: vagrant
 
 on: [push]
 
@@ -30,4 +30,4 @@ jobs:
       run: vagrant up
 
     - name: ssh into box after boot
-      run: vagrant ssh -c "echo 'hello world!'"
+      run: vagrant ssh -c "wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh gentoo-prefix noninteractive"
