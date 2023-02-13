@@ -5,6 +5,12 @@ on: [push]
 jobs:
   vagrant-up:
     runs-on: macos-12
+    strategy:
+      matrix:
+        VAGRANTFILE: [Vagrantfile.ubuntu1804]
+
+    env:
+      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
 
     steps:
     - uses: actions/checkout@v2
@@ -13,7 +19,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.vagrant.d/boxes
-        key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+        key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix-VAGRANTFILE ) }}
         restore-keys: |
           ${{ runner.os }}-vagrant-
 
