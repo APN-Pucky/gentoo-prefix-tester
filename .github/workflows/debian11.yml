@@ -1,6 +1,11 @@
 name: debian11 
 
 on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - Vagrantfile.debian11
+      - .github/workflows/debian11.yml
   schedule:
     - cron: "0 6 15 * *"
 

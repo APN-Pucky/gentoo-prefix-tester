@@ -1,6 +1,11 @@
 name: ubuntu2204
 
 on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - Vagrantfile.ubuntu2204
+      - .github/workflows/ubuntu2204.yml
   schedule:
     - cron: "0 6 17 * *"
 

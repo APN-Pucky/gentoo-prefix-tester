@@ -1,6 +1,11 @@
 name: ubuntu1804
 
 on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - Vagrantfile.ubuntu1804
+      - .github/workflows/ubuntu1804.yml
   schedule:
     - cron: "0 6 16 * *"
 
