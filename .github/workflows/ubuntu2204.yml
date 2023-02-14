@@ -45,7 +45,7 @@ jobs:
       run: grep -i -A 1 "Details might be found in the build log:" full.log | tail -n1 | awk '{print $2}' | sed 's/.*portage\/\(.*\)\/temp.*/\1/'
 
     - name: Get build.log
-      run:  vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full.log | tail -n1 | awk '{print \$2}')" > build.log
+      run:  vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full.log | tail -n1 | awk '{print $2}')" > build.log
 
     - name: Upload build.log
       uses: actions/upload-artifact@v3
