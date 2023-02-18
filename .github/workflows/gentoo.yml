@@ -1,0 +1,67 @@
+name: gentoo
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - Vagrantfile.gentoo
+      - .github/workflows/gentoo.yml
+  schedule:
+    - cron: "0 6 25 * *"
+
+jobs:
+  vagrant:
+    runs-on: macos-12
+    strategy:
+      fail-fast: false
+      matrix:
+        VAGRANTFILE: [Vagrantfile.gentoo]
+
+    env:
+      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Vagrant boxes
+      uses: actions/cache@v2
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
+        restore-keys: |
+          ${{ runner.os }}-vagrant-
+
+    - name: Show Vagrant version
+      run: vagrant --version
+
+    - name: Run vagrant up
+      run: vagrant up
+
+    - name: ssh into box after boot
+      id: run
+      run: vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' > full.log
+      continue-on-error: true
+
+    - name: Upload full.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: full_log
+        path: full.log
+
+    - name: Get faulty ebuild
+      run: grep -i -A 1 "Details might be found in the build log:" full.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/'
+      continue-on-error: true
+
+    - name: Get build.log
+      run: vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full.log | tail -n1 )" > build.log
+      continue-on-error: true
+
+    - name: Upload build.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: build_log
+        path: build.log
+    
+    - name: Check on failures
+      if: steps.run.outcome != 'success'
+      run: exit 1
