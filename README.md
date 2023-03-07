@@ -22,7 +22,7 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 - [x] Regularly run to keep checking ::gentoo tree
 - [x] Upload full log and specific failed package log as artifacts
 - [ ] Automatic reports to gentoo bugzilla using pybugz (analogous to https://github.com/toralf/tinderbox)  
-  - Careful detection of already (automatic) submitted bugs, i.e. just append a message if prefix fails for another system (debian11, ubunutX, ...)
+  - Careful detection of already (automatic) submitted bugs, i.e. just append a message if prefix fails for another system (debianX, ubuntuX, ...)
 - [ ] Test both unstable and stable gentoo(-prefix)
 
 
