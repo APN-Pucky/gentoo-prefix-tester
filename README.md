@@ -13,6 +13,7 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 
 # Why
 
+- often works on gentoo, but not on other systems
 - I tried to install it a few times and kept running into issues
 - gentoo-prefix is non trivial and depends on the underlying system
 
