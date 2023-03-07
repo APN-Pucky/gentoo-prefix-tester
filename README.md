@@ -11,6 +11,11 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 
 [![ubuntu2204](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu2204.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu2204.yml)
 
+# Why
+
+- I tried to install it a few times and kept running into issues
+- gentoo-prefix is non trivial and depends on the underlying system
+
 # Idea
 
 - [x] Use vagrant+virtualbox to simulate pure OS instead of docker containers (-> Github CI/Actions only have vagrant for MacOS)
