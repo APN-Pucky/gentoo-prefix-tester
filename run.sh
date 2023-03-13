@@ -6,8 +6,8 @@ else
     export VAGRANT_VAGRANTFILE=$1
 fi
 
-TIME="$(shell date +%Y%m%d%H%M%S)"
-OS="$(shell echo $VAGRANT_VAGRANTFILE | sed 's/.*\///')"
+TIME="$(date +%Y%m%d%H%M%S)"
+OS="$(echo $VAGRANT_VAGRANTFILE | sed 's/.*\///')"
 SUFFIX="$OS_$TIME"
 
 # Start the VM
