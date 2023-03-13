@@ -3,12 +3,13 @@ then
     echo "Usage: $0 Vagrantfile"
     exit 1
 else
+    VAGRANT_VAGRANTFILE=$1
     export VAGRANT_VAGRANTFILE=$1
 fi
 
 TIME="$(date +%Y%m%d%H%M%S)"
 OS="$(echo $VAGRANT_VAGRANTFILE | sed 's/.*\///')"
-SUFFIX="$OS_$TIME"
+SUFFIX="${OS}_${TIME}"
 
 # Start the VM
 vagrant up
