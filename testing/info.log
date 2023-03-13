@@ -1,5 +1,0 @@
-System: 
-Vagrantfile generic/debian11
-
-Steps to Reproduce:
-Run bootstrap-prefix.sh
