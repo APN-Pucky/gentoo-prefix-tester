@@ -4,11 +4,12 @@ then
     exit 1
 else
     VAGRANT_VAGRANTFILE=$1
+    # export it to be used by vagrant
     export VAGRANT_VAGRANTFILE=$1
 fi
 
 TIME="$(date +%Y%m%d%H%M%S)"
-OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/')"
+OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
 SUFFIX="${OS}_${TIME}"
 FAILED=0
 
@@ -31,8 +32,9 @@ vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/script
 # if failed, report
 if [ $FAILED -eq 1 ]
 then
+    # Find out what failed
     grep -i -A 1 "Details might be found in the build log:" full_$SUFFIX.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' || die 
-    vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 )" > build_$SUFFIX.log || die 
+    vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 | sed -s 's/build\.log.*/build.log/' )" > build_$SUFFIX.log || die 
 
     # Create info log
     echo "System:"  >> info_$SUFFIX.log
