@@ -8,7 +8,7 @@ else
 fi
 
 TIME="$(date +%Y%m%d%H%M%S)"
-OS="$(echo $VAGRANT_VAGRANTFILE | sed 's/.*\.//')"
+OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/')"
 SUFFIX="${OS}_${TIME}"
 FAILED=0
 
@@ -33,11 +33,21 @@ if [ $FAILED -eq 1 ]
 then
     grep -i -A 1 "Details might be found in the build log:" full_$SUFFIX.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' || die 
     vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 )" > build_$SUFFIX.log || die 
-    vagrant destroy
-    ./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log 
+
+    # Create info log
+    echo "System:"  >> info_$SUFFIX.log
+    echo "$(vagrant --version)" >> info_$SUFFIX.log
+    echo "$OS" >> info_$SUFFIX.log
+    echo "$(vagrant ssh -c 'uname -a')" >> info_$SUFFIX.log
+    echo "" >> info_$SUFFIX.log
+    echo "Steps to reproduce the bug:" >> info_$SUFFIX.log
+    echo "Run the bootstrap-prefix.sh" >> info_$SUFFIX.log
+
+    #vagrant destroy
+    ./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log info_$SUFFIX.log
     exit 1
 else
     echo "Success to build prefix"
-    vagrant destroy
+    #vagrant destroy
     exit 0
 fi

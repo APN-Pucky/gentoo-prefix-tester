@@ -6,9 +6,11 @@ else
     OS=$1
     FULL=$2
     BUILD=$3
+    INFO=$4
 fi
 
 TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')
+TITLE="$TITLE: bootstrap-prefix.sh fails"
 # compress both logs with bz2
 bzip2 -z $FULL
 bzip2 -z $BUILD
@@ -18,12 +20,7 @@ BUILD=$BUILD.bz2
 ##################
 # Report the bug #
 ##################
-# Create info log
-echo "System:"  >> info_$SUFFIX.log
-echo "$OS" > info_$SUFFIX.log
-echo "" >> info_$SUFFIX.log
-echo "Steps to reproduce the bug:" >> info_$SUFFIX.log
-echo "Run the bootstrap-prefix.sh" >> info_$SUFFIX.log
+
 
 # Search for existing bugs
 bugz search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
@@ -50,13 +47,13 @@ else
         -a prefix@gentoo.org \
         --component "Prefix Support"    \
         --version "unspecified"           \
-        --title "$TITLE: bootstrap-prefix.sh fails"          \
+        --title "$TITLE"          \
         --op-sys "Linux"                  \
         --platform "All"                  \
         --priority "Normal"               \
         --severity "Normal"            \
         --alias ""                        \
-        --description-from "./info_$SUFFIX.log"   \
+        --description-from "./$INFO"   \
         --batch                           \
         --default-confirm n               \
         --cc alexander@neuwirth-informatik.de \
