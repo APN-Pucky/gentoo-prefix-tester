@@ -15,7 +15,7 @@ SUFFIX="${OS}_${TIME}"
 vagrant up
 # Stop Vagrant on failures
 die () {
-    vagrant halt
+    vagrant destroy
     exit 1
 }
 
@@ -23,6 +23,16 @@ die () {
 vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' > full_$SUFFIX.log || die
 grep -i -A 1 "Details might be found in the build log:" full_$SUFFIX.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' || die 
 vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 )" > build_$SUFFIX.log || die 
-vagrant halt
 
-./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log 
+# Create info log
+echo "System:"  >> info_$SUFFIX.log
+echo "$(vagrant --version)" >> info_$SUFFIX.log
+echo "$OS" >> info_$SUFFIX.log
+echo "$(vagrant ssh -c 'uname -a')" >> info_$SUFFIX.log
+echo "" >> info_$SUFFIX.log
+echo "Steps to reproduce the bug:" >> info_$SUFFIX.log
+echo "Run the bootstrap-prefix.sh" >> info_$SUFFIX.log
+
+vagrant destroy
+
+./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log info_$SUFFIX.log

@@ -30,9 +30,6 @@ jobs:
         key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
         restore-keys: |
           ${{ runner.os }}-vagrant-
-
-    - name: Show Vagrant version
-      run: vagrant --version
     
     - name: run bootstrap
       id: run
@@ -43,14 +40,19 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: full_log
-        path: full*.log
+        path: full*
 
     - name: Upload build.log
       uses: actions/upload-artifact@v3
       with:
         name: build_log
-        path: build*.log
-    
+        path: build*
+ 
+    - name: Upload info.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: info_log 
+        path: info*   
     - name: Check on failures
       if: steps.run.outcome != 'success'
       run: exit 1
