@@ -1,0 +1,1 @@
+sudo yum -y groupinstall 'Development Tools'

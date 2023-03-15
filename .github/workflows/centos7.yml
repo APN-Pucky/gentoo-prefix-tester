@@ -1,11 +1,11 @@
-name: debian11 
+name: centos7
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - Vagrantfile.debian11
-      - .github/workflows/debian11.yml
+      - Vagrantfile.centos7
+      - .github/workflows/centos7.yml
   schedule:
     - cron: "0 6 15 * *"
 
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        VAGRANTFILE: [Vagrantfile.debian11, Vagrantfile.debian11-arm64]
+        VAGRANTFILE: [Vagrantfile.centos7]
         STABLE: [STABLE,UNSTABLE]
 
     env:

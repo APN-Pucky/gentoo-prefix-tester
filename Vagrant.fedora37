@@ -1,0 +1,9 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "generic/fedora37"
+    config.vm.provision :shell, path: "vagrant/bootstrap-dnf.sh"
+
+    config.vm.define 'fedora' 
+
+    # Prevent SharedFoldersEnableSymlinksCreate errors
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+end

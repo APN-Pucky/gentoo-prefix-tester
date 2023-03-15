@@ -1,0 +1,9 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "generic/centos7"
+    config.vm.provision :shell, path: "vagrant/bootstrap-yum.sh"
+
+    config.vm.define 'centos' 
+
+    # Prevent SharedFoldersEnableSymlinksCreate errors
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+end
