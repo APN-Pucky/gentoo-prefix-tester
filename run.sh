@@ -42,7 +42,7 @@ if [ $FAILED -eq 1 ]
 then
     # Find out what failed
     grep -i -A 1 "Details might be found in the build log:" full_$SUFFIX.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' || die 
-    vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 | sed -s 's/build\.log.*/build.log/' )" > build_$SUFFIX.log || die 
+    vagrant ssh -c "cat $(grep -i -A 1 'Details might be found in the build log:' full_$SUFFIX.log | tail -n1 | sed 's/build\.log.*/build.log/' )" > build_$SUFFIX.log || die 
 
     # Create info log
     echo "System:"  >> info_$SUFFIX.log
