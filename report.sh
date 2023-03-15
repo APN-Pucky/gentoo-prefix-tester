@@ -1,16 +1,30 @@
-if [ ! $# -eq 3 ]
+if [ ! $# -eq 5 ]
 then
-    echo "Usage: $0 Vagrantfile"
+    echo "Usage: $0 OS FULL_LOG BUILD_LOG INFO_LOG KEY"
     exit 1
 else
     OS=$1
     FULL=$2
     BUILD=$3
     INFO=$4
+    KEY=$5
+    if [ ! -f "$FULL" ]; then
+      echo "$FULL does not exist."
+      exit 1
+    fi
+    if [ ! -f "$BUILD" ]; then
+      echo "$BUILD does not exist."
+      exit 1
+    fi
+    if [ ! -f "$INFO" ]; then
+      echo "$INFO does not exist."
+      exit 1
+    fi
 fi
 
-TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL.log | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')
+TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')
 TITLE="$TITLE: bootstrap-prefix.sh fails"
+
 # compress both logs with bz2
 bzip2 -z $FULL
 bzip2 -z $BUILD
@@ -23,26 +37,44 @@ BUILD=$BUILD.bz2
 
 
 # Search for existing bugs
-bugz search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
-if grep -Fxq "$TITLE" bgo_$SUFFIX.out
-then
-    # get bug id
-    id=$(grep "$TITLE" bgo_$SUFFIX.out | tail -n1 | awk '{print $1}')
-    bugz get $id 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
-    if grep -Fxq "$OS" bgo_$SUFFIX.out
+bugz -k $KEY search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
+echo "Failed: $TITLE"
+if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
+  echo "found"
+else
+  echo "not found"
+fi
+if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
+    echo "Bug exists"
+    #exit 1
+    # abort if multiple bugs reported
+    if grep -Fq "Info: 1 bug" bgo_$SUFFIX.out
     then
-        # already reportet for this OS
-        echo "Bug already reported for $OS"
+        # get bug id
+        id=$(cat bgo_$SUFFIX.out | tail -n2 | head -n1 | awk '{print $1}')
+        echo "Bug id: $id"
+        bugz -k $KEY get "$id" 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
+        if grep -Fq "$OS" bgo_$SUFFIX.out
+        then
+            # already reportet for this OS
+            echo "Bug already reported for $OS"
+        else
+            echo "Adding message for $OS"
+            # add message fails for this os as well
+            bugz -k $KEY modify --comment "fails for $OS as well" $id 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+            # attach logs
+            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+        fi
     else
-        # add message fails for this os as well
-        bugz modify --comment "fails for $OS as well" $id 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
-        # attach logs
-        bugz attach --content-type "text/plain" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
-        bugz attach --content-type "text/plain" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+        echo "Multiple bugs found, aborting"
     fi
 else
+    echo "Reporting the bug"
+    exit 1
     # Post the bug
-    bugz post \
+    bugz --key $KEY \
+        post \
         --product "Gentoo/Alt"          \
         -a prefix@gentoo.org \
         --component "Prefix Support"    \
@@ -61,7 +93,7 @@ else
 
     id=$(grep "Info: Bug .* submitted" bgo_$SUFFIX.out | sed 's/[^0-9]//g')
     # Attach the logs
-    bugz attach --content-type "text/plain" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
-    bugz attach --content-type "text/plain" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
+    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
+    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
 fi
 
