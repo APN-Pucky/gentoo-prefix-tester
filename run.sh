@@ -1,9 +1,10 @@
-if [ ! $# -eq 1 ]
+if [ ! $# -eq 2 ]
 then
-    echo "Usage: $0 Vagrantfile"
+    echo "Usage: $0 Vagrantfile KEY"
     exit 1
 else
     VAGRANT_VAGRANTFILE=$1
+    KEY=$2
     # export it to be used by vagrant
     export VAGRANT_VAGRANTFILE=$1
 fi
@@ -46,7 +47,7 @@ then
     echo "Run the bootstrap-prefix.sh" >> info_$SUFFIX.log
 
     #vagrant destroy
-    ./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log info_$SUFFIX.log
+    ./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log info_$SUFFIX.log $KEY
     exit 1
 else
     echo "Success to build prefix"
