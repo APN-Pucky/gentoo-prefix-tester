@@ -33,7 +33,7 @@ vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/script
 # if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
 if [ "$UNSTABLE" = "UNSTABLE" ]
 then
-    vagrant ssh -c 'sed -i 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh' >> full_$SUFFIX.log || die
+    vagrant ssh -c "sed -i 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> full_$SUFFIX.log || die
 fi
 vagrant ssh -c './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> full_$SUFFIX.log || fail
 
