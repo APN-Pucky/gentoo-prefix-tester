@@ -51,7 +51,7 @@ then
     echo "$(vagrant ssh -c 'uname -a')" >> info_$SUFFIX.log
     echo "" >> info_$SUFFIX.log
     echo "Steps to reproduce the bug:" >> info_$SUFFIX.log
-    echo "Run the bootstrap-prefix.sh" >> info_$SUFFIX.log
+    echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE)" >> info_$SUFFIX.log
 
     #vagrant destroy
     ./report.sh $OS full_$SUFFIX.log build_$SUFFIX.log info_$SUFFIX.log $KEY
