@@ -36,7 +36,7 @@ jobs:
 
     - name: ssh into box after boot
       id: run
-      run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secret.GENTOO_BUGZILLA_API_KEY }}
+      run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }}
       continue-on-error: true
 
     - name: Upload full.log
