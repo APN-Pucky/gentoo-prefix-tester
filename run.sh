@@ -1,10 +1,11 @@
-if [ ! $# -eq 2 ]
+if [ ! $# -eq 3 ]
 then
-    echo "Usage: $0 Vagrantfile KEY"
+    echo "Usage: $0 Vagrantfile KEY UN/STABLE"
     exit 1
 else
     VAGRANT_VAGRANTFILE=$1
     KEY=$2
+    UNSTABLE=$3
     # export it to be used by vagrant
     export VAGRANT_VAGRANTFILE=$1
 fi
@@ -28,7 +29,13 @@ fail () {
 }
 
 # Jump start prefix
-vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh && ./bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' > full_$SUFFIX.log || fail
+vagrant ssh -c 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' > full_$SUFFIX.log || die
+# if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
+if [ "$UNSTABLE" = "UNSTABLE" ]
+then
+    vagrant ssh -c 'sed -i 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh' >> full_$SUFFIX.log || die
+fi
+vagrant ssh -c './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> full_$SUFFIX.log || fail
 
 # if failed, report
 if [ $FAILED -eq 1 ]
