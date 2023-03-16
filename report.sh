@@ -61,7 +61,7 @@ if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            bugz -k $KEY modify --comment "fails for $OS as well" $id 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+            bugz -k $KEY modify --comment-from "./$INFO" $id 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
             # attach logs
             bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
             bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
@@ -71,7 +71,6 @@ if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
     fi
 else
     echo "Reporting the bug"
-    exit 1
     # Post the bug
     bugz --key $KEY \
         post \
