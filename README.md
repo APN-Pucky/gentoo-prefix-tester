@@ -7,16 +7,6 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 |---|---|---|---|---|
 | [![gentoo](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/gentoo.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/gentoo.yml)  |  [![debian11](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/debian11.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/debian11.yml) |  [![ubuntu1804](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu1804.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu1804.yml) |  [![centos7](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/centos7.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/centos7.yml) | [![fedora37](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/fedora37.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/fedora37.yml)  |
 |   |  [![debian11-arm64](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/debian11-arm64.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/debian11-arm64.yml) | [![ubuntu2204](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu2204.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/ubuntu2204.yml)  |   |   |
-|   |   |   |   |   |
-# 
-
-
-# 
-
-
-
-# Ubuntu
-
 
 
 
