@@ -1,4 +1,4 @@
-name: debian11 
+name: debian11-arm64
 
 on:
   push:
