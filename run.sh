@@ -45,12 +45,13 @@ then
     # dodge macos sed -i option
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
-$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee "full_${SUFFIX}.log" || fail
+$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> "full_${SUFFIX}.log" || fail
 
 # if failed, report
 if [ $FAILED -eq 1 ]
 then
     # Find out what failed
+    tail -n20 "full_${SUFFIX}.log"
     grep -i -A 1 "Details might be found in the build log:" "full_${SUFFIX}.log" | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' #|| die 
     # Stage 1 error
     $VAGRANTCMD "cat $(grep -i 'You can find a log of what happened in' "full_${SUFFIX}.log" | sed 's/You can find a log of what happened in//' )" >> "build_${SUFFIX}.log" #|| die
@@ -67,7 +68,7 @@ then
     echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE)" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Error message:" >> "info_${SUFFIX}.log"
-    echo "$(cat "full_${SUFFIX}.log" | tail -n10 )" >> "info_${SUFFIX}.log"
+    echo "$(tail -n10 full_${SUFFIX}.log )" >> "info_${SUFFIX}.log"
 
     #vagrant destroy
     ./report.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY"
