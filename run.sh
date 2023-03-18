@@ -15,8 +15,8 @@ else
         VAGRANTCMD="eval"
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g')"
         # incdude OS? -> nope does not change (often...)
-        mkdir -p /tmp/gentoo-prefix-$TIME
-        cd /tmp/gentoo-prefix-$TIME
+        mkdir -p tmp-gentoo-prefix-$TIME
+        cd tmp-gentoo-prefix-$TIME
     else
         VAGRANTCMD="vagrant ssh -c"
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
