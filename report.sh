@@ -1,4 +1,4 @@
-if [ ! $# -eq 5 ]
+if [ ! $# -eq 6 ]
 then
     echo "Usage: $0 OS STABLE FULL_LOG BUILD_LOG INFO_LOG KEY"
     exit 1
