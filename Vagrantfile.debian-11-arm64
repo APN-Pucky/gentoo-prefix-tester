@@ -1,9 +1,19 @@
 Vagrant.configure("2") do |config|
-    config.vm.box = "kula/bullseye-arm64"
-    config.vm.box_version = "11.20230201.1"
+    config.vm.box = "bobbye/debian_bullseye_arm64"
 
     config.vm.provision :shell, path: "vagrant/bootstrap-apt.sh"
     config.vm.define 'debian-11-arm64' 
+
+    config.vm.provider "qemu" do |qe|
+      #qe.qemu_dir = "/usr/share/qemu"
+      qe.qemu_dir = "/usr/local/share/qemu"
+      qe.machine = "virt,highmem=on"
+      qe.cpu = "max"
+      #qe.cpu = "host"
+      #qe.cpu = "cortex-a72"
+    end
+
+
     # Prevent SharedFoldersEnableSymlinksCreate errors
     config.vm.synced_folder ".", "/vagrant", disabled: true
 end

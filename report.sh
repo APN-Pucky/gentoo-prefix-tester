@@ -1,13 +1,14 @@
 if [ ! $# -eq 5 ]
 then
-    echo "Usage: $0 OS FULL_LOG BUILD_LOG INFO_LOG KEY"
+    echo "Usage: $0 OS STABLE FULL_LOG BUILD_LOG INFO_LOG KEY"
     exit 1
 else
     OS=$1
-    FULL=$2
-    BUILD=$3
-    INFO=$4
-    KEY=$5
+    STABLE=$2
+    FULL=$3
+    BUILD=$4
+    INFO=$5
+    KEY=$6
     if [ ! -f "$FULL" ]; then
       echo "$FULL does not exist."
       exit 1
@@ -23,7 +24,7 @@ else
 fi
 
 TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')
-TITLE="$TITLE: bootstrap-prefix.sh fails"
+TITLE="$TITLE: $STABLE bootstrap-prefix.sh fails"
 
 # compress both logs with bz2
 bzip2 -z $FULL
