@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/windows-2022.yml
   schedule:
-    - cron: "0 6 22 * *"
+    - cron: "0 6 23 * *"
 
 jobs:
   vagrant:
@@ -29,7 +29,7 @@ jobs:
         run: python -m pip install git+https://github.com/williamh/pybugz.git
       - uses: cygwin/cygwin-install-action@master
         with:
-          packages: ["wget", "gcc-g++"]
+          packages: "wget, gcc-g++"
 
       - name: run bootstrap
         id: run
