@@ -34,7 +34,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}
+        run: bash run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}
         continue-on-error: true
 
       - name: Upload full.log
