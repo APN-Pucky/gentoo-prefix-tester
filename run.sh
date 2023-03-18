@@ -20,16 +20,16 @@ else
     else
         VAGRANTCMD="vagrant ssh -c"
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
+
+        # export it to be used by vagrant
+        export VAGRANT_VAGRANTFILE=$1
+        # Start the VM
+        vagrant up
     fi
     SUFFIX="${STABLE}_${OS}_${TIME}"
-    # export it to be used by vagrant
-    export VAGRANT_VAGRANTFILE=$1
 fi
-
 FAILED=0
 
-# Start the VM
-vagrant up
 # Stop Vagrant on failures
 die () {
     echo "Unexpected error, aborting"
