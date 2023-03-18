@@ -20,6 +20,7 @@ jobs:
 
     env:
       VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
+      VAGRANT_DEFAULT_PROVIDER: qemu
 
     steps:
     - uses: actions/checkout@v2
