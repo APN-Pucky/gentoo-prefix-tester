@@ -28,6 +28,7 @@ else
     fi
     SUFFIX="${STABLE}_${OS}_${TIME}"
 fi
+echo "Running prefix on ${SUFFIX}"
 FAILED=0
 
 # Stop Vagrant on failures
@@ -48,7 +49,7 @@ then
     # dodge macos sed -i option
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
-$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee "full_${SUFFIX}.log" || fail
+$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> "full_${SUFFIX}.log" || fail
 
 # if failed, report
 if [ $FAILED -eq 1 ]
