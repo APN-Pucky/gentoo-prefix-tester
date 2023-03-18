@@ -33,7 +33,9 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: bash -o igncr run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}
+        run: |
+            set PKG_CONFIG_PATH=
+            bash -o igncr run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}
         continue-on-error: true
 
       - name: Upload full.log
