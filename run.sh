@@ -14,10 +14,6 @@ else
         # use the local system
         VAGRANTCMD="eval"
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g')"
-        # incdude OS? -> nope does not change (often...)
-        mkdir -p tmp-gentoo-prefix-$TIME
-        cd tmp-gentoo-prefix-$TIME
-        REPORT=../report.sh
     else
         VAGRANTCMD="vagrant ssh -c"
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
@@ -26,7 +22,6 @@ else
         export VAGRANT_VAGRANTFILE=$1
         # Start the VM
         vagrant up
-        REPORT=./report.sh
     fi
     SUFFIX="${STABLE}_${OS}_${TIME}"
 fi
@@ -56,8 +51,11 @@ $VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee "ful
 if [ $FAILED -eq 1 ]
 then
     # Find out what failed
-    grep -i -A 1 "Details might be found in the build log:" "full_${SUFFIX}.log" | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' || die 
-    $VAGRANTCMD "cat $(grep -i -A 1 'Details might be found in the build log:' "full_${SUFFIX}.log" | tail -n1 | sed 's/build\.log.*/build.log/' )" > "build_${SUFFIX}.log" || die 
+    grep -i -A 1 "Details might be found in the build log:" "full_${SUFFIX}.log" | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' #|| die 
+    # Stage 1 error
+    $VAGRANTCMD "cat $(grep -i 'You can find a log of what happened in' "full_${SUFFIX}.log" | sed 's/You can find a log of what happened in//' )" >> "build_${SUFFIX}.log" #|| die
+    # Build error 
+    $VAGRANTCMD "cat $(grep -i -A 1 'Details might be found in the build log:' "full_${SUFFIX}.log" | tail -n1 | sed 's/build\.log.*/build.log/' )" >> "build_${SUFFIX}.log" #|| die
 
     # Create info log
     echo "System:"  >> "info_${SUFFIX}.log"
@@ -67,9 +65,12 @@ then
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
     echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE)" >> "info_${SUFFIX}.log"
+    echo "" >> "info_${SUFFIX}.log"
+    echo "Error message:" >> "info_${SUFFIX}.log"
+    echo "$(cat "full_${SUFFIX}.log" | tail -n10 )" >> "info_${SUFFIX}.log"
 
     #vagrant destroy
-    $REPORT "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY"
+    ./report.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY"
     exit 1
 else
     echo "Success to build prefix"

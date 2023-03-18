@@ -23,7 +23,7 @@ else
     fi
 fi
 
-TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')
+TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')$(grep -i -A 1 "I tried running" $FULL | tail -n1 )
 TITLE="$TITLE: $STABLE bootstrap-prefix.sh fails"
 
 # compress both logs with bz2
