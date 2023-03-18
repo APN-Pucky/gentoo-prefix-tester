@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - run.sh
       - Vagrantfile.ubuntu-2204
       - .github/workflows/ubuntu-2204.yml
   schedule:
