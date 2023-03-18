@@ -1,11 +1,11 @@
-name: ubuntu1804
+name: ubuntu-1804
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - Vagrantfile.ubuntu1804
-      - .github/workflows/ubuntu1804.yml
+      - Vagrantfile.ubuntu-1804
+      - .github/workflows/ubuntu-1804.yml
   schedule:
     - cron: "0 6 10 * *"
 
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu1804]
+        VAGRANTFILE: [Vagrantfile.ubuntu-1804]
         STABLE: [STABLE,UNSTABLE]
 
     env:

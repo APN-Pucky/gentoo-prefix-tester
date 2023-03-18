@@ -1,0 +1,6 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "yzgyyang/macOS-10.14"
+  config.vm.define 'macos-10.14'
+  # Prevent SharedFoldersEnableSymlinksCreate errors
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+end

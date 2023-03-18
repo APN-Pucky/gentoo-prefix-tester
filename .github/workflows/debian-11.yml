@@ -1,13 +1,13 @@
-name: fedora37
+name: debian-11 
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - Vagrantfile.fedora37
-      - .github/workflows/fedora37.yml
+      - Vagrantfile.debian-11
+      - .github/workflows/debian-11.yml
   schedule:
-    - cron: "0 6 6 * *"
+    - cron: "0 6 4 * *"
 
 jobs:
   vagrant:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        VAGRANTFILE: [Vagrantfile.fedora37]
+        VAGRANTFILE: [Vagrantfile.debian-11]
         STABLE: [STABLE,UNSTABLE]
 
     env:

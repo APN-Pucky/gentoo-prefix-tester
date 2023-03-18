@@ -1,11 +1,11 @@
-name: centos7
+name: centos-7
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - Vagrantfile.centos7
-      - .github/workflows/centos7.yml
+      - Vagrantfile.centos-7
+      - .github/workflows/centos-7.yml
   schedule:
     - cron: "0 6 2 * *"
 
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        VAGRANTFILE: [Vagrantfile.centos7]
+        VAGRANTFILE: [Vagrantfile.centos-7]
         STABLE: [STABLE,UNSTABLE]
 
     env:

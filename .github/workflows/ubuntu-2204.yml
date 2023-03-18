@@ -1,12 +1,12 @@
-name: ubuntu2204
+name: ubuntu-2204
 
 on:
   push:
     branches: [ "main" ]
     paths:
       - run.sh
-      - Vagrantfile.ubuntu2204
-      - .github/workflows/ubuntu2204.yml
+      - Vagrantfile.ubuntu-2204
+      - .github/workflows/ubuntu-2204.yml
   schedule:
     - cron: "0 6 12 * *"
 
@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu2204]
+        VAGRANTFILE: [Vagrantfile.ubuntu-2204]
         STABLE: [STABLE,UNSTABLE]
 
     env:
