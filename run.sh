@@ -47,7 +47,7 @@ if [ "$STABLE" = "UNSTABLE" ]
 then
     $VAGRANTCMD "sed -i 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
-$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> "full_${SUFFIX}.log" || fail
+$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee "full_${SUFFIX}.log" || fail
 
 # if failed, report
 if [ $FAILED -eq 1 ]
