@@ -37,34 +37,34 @@ BUILD=$BUILD.bz2
 
 
 # Search for existing bugs
-bugz -k $KEY search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
+bugz -k $KEY search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
 echo "Failed: $TITLE"
-if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
+if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
   echo "found"
 else
   echo "not found"
 fi
-if grep -Fq "$TITLE" bgo_$SUFFIX.out ; then
+if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
     echo "Bug exists"
     #exit 1
     # abort if multiple bugs reported
-    if grep -Fq "Info: 1 bug" bgo_$SUFFIX.out
+    if grep -Fq "Info: 1 bug" bgo_${SUFFIX}.out
     then
         # get bug id
-        id=$(cat bgo_$SUFFIX.out | tail -n2 | head -n1 | awk '{print $1}')
+        id=$(cat bgo_${SUFFIX}.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
-        bugz -k $KEY get "$id" 1> bgo_$SUFFIX.out 2> bgo_$SUFFIX.err
-        if grep -Fq "$OS" bgo_$SUFFIX.out
+        bugz -k $KEY get "$id" 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
+        if grep -Fq "$OS" bgo_${SUFFIX}.out
         then
             # already reportet for this OS
             echo "Bug already reported for $OS"
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            bugz -k $KEY modify --comment-from "./$INFO" $id 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+            bugz -k $KEY modify --comment-from "./$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
             # attach logs
-            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
-            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err
+            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
         fi
     else
         echo "Multiple bugs found, aborting"
@@ -88,11 +88,11 @@ else
         --batch                           \
         --default-confirm n               \
         --cc alexander@neuwirth-informatik.de \
-        1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
+        1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
 
-    id=$(grep "Info: Bug .* submitted" bgo_$SUFFIX.out | sed 's/[^0-9]//g')
+    id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
     # Attach the logs
-    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
-    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_$SUFFIX.out 2>bgo_$SUFFIX.err 
+    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
 fi
 
