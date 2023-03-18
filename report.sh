@@ -32,13 +32,16 @@ bzip2 -z $BUILD
 FULL=$FULL.bz2
 BUILD=$BUILD.bz2
 
+# with explicit connection name to avoid missing default config error
+BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
+
 ##################
 # Report the bug #
 ##################
 
 
 # Search for existing bugs
-bugz -k $KEY search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
+$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
 echo "Failed: $TITLE"
 if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
   echo "found"
@@ -54,7 +57,7 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
         # get bug id
         id=$(cat bgo_${SUFFIX}.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
-        bugz -k $KEY get "$id" 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
+        $BUGZ get "$id" 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
         if grep -Fq "$OS" bgo_${SUFFIX}.out
         then
             # already reportet for this OS
@@ -62,10 +65,10 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            bugz -k $KEY modify --comment-from "./$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            $BUGZ modify --comment-from "./$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
             # attach logs
-            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
-            bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
         fi
     else
         echo "Multiple bugs found, aborting"
@@ -73,8 +76,7 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
 else
     echo "Reporting the bug"
     # Post the bug
-    bugz --key $KEY \
-        post \
+    $BUGZ post \
         --product "Gentoo/Alt"          \
         -a prefix@gentoo.org \
         --component "Prefix Support"    \
@@ -93,7 +95,7 @@ else
 
     id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
     # Attach the logs
-    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
-    bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
 fi
 
