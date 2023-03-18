@@ -62,7 +62,7 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            bugz -k $KEY modify --comment-from "./$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            bugz -k $KEY modify --comment-from "$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
             # attach logs
             bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
             bugz -k $KEY attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
@@ -85,7 +85,7 @@ else
         --priority "Normal"               \
         --severity "Normal"            \
         --alias ""                        \
-        --description-from "./$INFO"   \
+        --description-from "$INFO"   \
         --batch                           \
         --default-confirm n               \
         --cc alexander@neuwirth-informatik.de \
