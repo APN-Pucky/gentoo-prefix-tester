@@ -45,7 +45,8 @@ $VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/b
 # if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
 if [ "$STABLE" = "UNSTABLE" ]
 then
-    $VAGRANTCMD "sed -i 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
+    # dodge macos sed -i option
+    $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
 $VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee "full_${SUFFIX}.log" || fail
 

@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/macos-12.yml
   schedule:
-    - cron: "0 6 21 * *"
+    - cron: "0 6 22 * *"
 
 jobs:
   vagrant:
