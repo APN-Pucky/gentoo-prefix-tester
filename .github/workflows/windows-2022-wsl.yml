@@ -23,13 +23,12 @@ jobs:
 
     env:
       VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-      PKG_CONFIG_PATH: ""
-      SHELLOPTS: "igncr"
 
     steps:
       - uses: Vampire/setup-wsl@v2
-      - uses: actions/checkout@v2
       - run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y git wget python3 python3-pip build-essential
+      - run: git config --global core.autocrlf input
+      - uses: actions/checkout@v2
       - name: Install pybugz
         run: python3 -m pip install git+https://github.com/williamh/pybugz.git
 
