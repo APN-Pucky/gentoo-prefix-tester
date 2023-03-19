@@ -48,7 +48,31 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
 else
   echo "not found"
 fi
-if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
+if grep -Fq "Info: No bugs" bgo_${SUFFIX}.out ; then
+    echo "Reporting the bug"
+    # Post the bug
+    $BUGZ post \
+        --product "Gentoo/Alt"          \
+        -a prefix@gentoo.org \
+        --component "Prefix Support"    \
+        --version "unspecified"           \
+        --title "$TITLE"          \
+        --op-sys "Linux"                  \
+        --platform "All"                  \
+        --priority "Normal"               \
+        --severity "Normal"            \
+        --alias ""                        \
+        --description-from "$INFO"   \
+        --batch                           \
+        --default-confirm n               \
+        --cc alexander@neuwirth-informatik.de \
+        1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+
+    id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
+    # Attach the logs
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+else
     echo "Bug exists"
     #exit 1
     # abort if multiple bugs reported
@@ -73,29 +97,5 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
     else
         echo "Multiple bugs found, aborting"
     fi
-else
-    echo "Reporting the bug"
-    # Post the bug
-    $BUGZ post \
-        --product "Gentoo/Alt"          \
-        -a prefix@gentoo.org \
-        --component "Prefix Support"    \
-        --version "unspecified"           \
-        --title "$TITLE"          \
-        --op-sys "Linux"                  \
-        --platform "All"                  \
-        --priority "Normal"               \
-        --severity "Normal"            \
-        --alias ""                        \
-        --description-from "$INFO"   \
-        --batch                           \
-        --default-confirm n               \
-        --cc alexander@neuwirth-informatik.de \
-        1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
-
-    id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
-    # Attach the logs
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
 fi
 
