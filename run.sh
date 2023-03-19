@@ -51,7 +51,7 @@ $VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> "full_$
 if [ $FAILED -eq 1 ]
 then
     # Find out what failed
-    tail -n20 "full_${SUFFIX}.log"
+    tail -n50 "full_${SUFFIX}.log"
     grep -i -A 1 "Details might be found in the build log:" "full_${SUFFIX}.log" | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/' #|| die 
     # Stage 1 error
     $VAGRANTCMD "cat $(grep -i 'You can find a log of what happened in' "full_${SUFFIX}.log" | sed 's/You can find a log of what happened in//' )" >> "build_${SUFFIX}.log" #|| die
