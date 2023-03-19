@@ -74,7 +74,7 @@ if [ $NOBUG -ge 1 ] ; then
     id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
     # Attach the logs
     $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo_${SUFFIX}.out 
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee 1>bgo_${SUFFIX}.out 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo_${SUFFIX}.out 
 else
     echo "Bug exists"
     #exit 1

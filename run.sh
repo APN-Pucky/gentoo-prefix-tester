@@ -1,4 +1,4 @@
-if [ ! $# -eq 3 ]
+if [ ! $# -ge 3 ]
 then
     echo "Usage: $0 Vagrantfile KEY UN/STABLE"
     exit 1
@@ -6,6 +6,7 @@ else
     VAGRANT_VAGRANTFILE=$1
     KEY=$2
     STABLE=$3
+    EXTRA=$4
 
     TIME="$(date +%Y%m%d%H%M%S)"
     # if VAGRANT_FILE is "LOCAL" 
@@ -69,6 +70,9 @@ then
     echo "" >> "info_${SUFFIX}.log"
     echo "Error message:" >> "info_${SUFFIX}.log"
     echo "$(tail -n10 full_${SUFFIX}.log )" >> "info_${SUFFIX}.log"
+    echo "" >> "info_${SUFFIX}.log"
+    echo "Extra info:" >> "info_${SUFFIX}.log"
+    echo "$EXTRA" >> "info_${SUFFIX}.log"
 
     #vagrant destroy
     ./report.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY"

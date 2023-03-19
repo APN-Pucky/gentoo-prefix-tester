@@ -34,7 +34,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: bash -c -o igncr "unset PKG_CONFIG_PATH && mkdir --mode=a=rwxt /var/run/cygfork && source run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}"
+        run: bash -c -o igncr "unset PKG_CONFIG_PATH && mkdir --mode=a=rwxt /var/run/cygfork && source run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}""
         continue-on-error: true
 
       - name: Upload full.log

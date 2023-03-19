@@ -31,7 +31,7 @@ jobs:
         run: python -m pip install git+https://github.com/williamh/pybugz.git
       - run: brew install qemu
       - run: vagrant plugin install vagrant-qemu
-      
+
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
@@ -42,7 +42,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: ./run.sh  ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }}
+        run: ./run.sh  ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         continue-on-error: true
 
       - name: Upload full.log
