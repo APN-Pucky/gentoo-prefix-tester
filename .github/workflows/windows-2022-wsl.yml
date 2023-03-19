@@ -34,7 +34,7 @@ jobs:
         run: sed -i.bak 's/\r//g' *.sh
       - name: run bootstrap
         id: run
-        run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+        run: useradd -m -p 4qBD5NWD3IkbU test && sudo -u test ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
         continue-on-error: true
 
       - name: Upload full.log
