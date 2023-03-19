@@ -41,7 +41,7 @@ BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
 
 
 # Search for existing bugs
-$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
+$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de | tee bgo_${SUFFIX}.out
 echo "Failed: $TITLE"
 TITLEBUG=$( grep -c "$TITLE" bgo_${SUFFIX}.out )
 if [ $TITLEBUG -ge 1 ] ; then
@@ -69,12 +69,12 @@ if [ $NOBUG -ge 1 ] ; then
         --batch                           \
         --default-confirm n               \
         --cc alexander@neuwirth-informatik.de \
-        1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+        | tee bgo_${SUFFIX}.out
 
     id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
     # Attach the logs
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo_${SUFFIX}.out 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee 1>bgo_${SUFFIX}.out 
 else
     echo "Bug exists"
     #exit 1
@@ -85,7 +85,7 @@ else
         # get bug id
         id=$(cat bgo_${SUFFIX}.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
-        $BUGZ get "$id" 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
+        $BUGZ get "$id" | tee bgo_${SUFFIX}.out
         OSBUG=$(grep -c "$OS" bgo_${SUFFIX}.out)
         if [ $OSBUG -ge 1 ]
         then
@@ -94,10 +94,10 @@ else
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            $BUGZ modify --comment-from "$INFO" $id 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            $BUGZ modify --comment-from "$INFO" $id | tee bgo_${SUFFIX}.out 
             # attach logs
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD 1>bgo_${SUFFIX}.out 2>bgo_${SUFFIX}.err
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo_${SUFFIX}.out
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo_${SUFFIX}.out
         fi
     else
         echo "Multiple bugs found, aborting"
