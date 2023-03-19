@@ -41,16 +41,16 @@ BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
 
 
 # Search for existing bugs
-$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de | tee bgo_${SUFFIX}.out
+$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de | tee bgo.out
 echo "Failed: $TITLE"
-TITLEBUG=$( grep -c "$TITLE" bgo_${SUFFIX}.out )
+TITLEBUG=$( grep -c "$TITLE" bgo.out )
 if [ $TITLEBUG -ge 1 ] ; then
   echo "found"
 else
   echo "not found"
 fi
 # We count with -c instead of -Fq due to cygwin...
-NOBUG=$( grep -c "Info: No bugs" bgo_${SUFFIX}.out )
+NOBUG=$( grep -c "Info: No bugs" bgo.out )
 if [ $NOBUG -ge 1 ] ; then
     echo "Reporting the bug"
     # Post the bug
@@ -69,24 +69,24 @@ if [ $NOBUG -ge 1 ] ; then
         --batch                           \
         --default-confirm n               \
         --cc alexander@neuwirth-informatik.de \
-        | tee bgo_${SUFFIX}.out
+        | tee bgo.out
 
-    id=$(grep "Info: Bug .* submitted" bgo_${SUFFIX}.out | sed 's/[^0-9]//g')
+    id=$(grep "Info: Bug .* submitted" bgo.out | sed 's/[^0-9]//g')
     # Attach the logs
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo_${SUFFIX}.out 
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo_${SUFFIX}.out 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo.out 
+    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo.out 
 else
     echo "Bug exists"
     #exit 1
     # abort if multiple bugs reported
-    ONEBUG=$( grep -c "Info: 1 bug" bgo_${SUFFIX}.out)
+    ONEBUG=$( grep -c "Info: 1 bug" bgo.out)
     if [ $ONEBUG -ge 1 ]
     then
         # get bug id
-        id=$(cat bgo_${SUFFIX}.out | tail -n2 | head -n1 | awk '{print $1}')
+        id=$(cat bgo.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
-        $BUGZ get "$id" | tee bgo_${SUFFIX}.out
-        OSBUG=$(grep -c "$OS" bgo_${SUFFIX}.out)
+        $BUGZ get "$id" | tee bgo.out
+        OSBUG=$(grep -c "$OS" bgo.out)
         if [ $OSBUG -ge 1 ]
         then
             # already reportet for this OS
@@ -94,10 +94,10 @@ else
         else
             echo "Adding message for $OS"
             # add message fails for this os as well
-            $BUGZ modify --comment-from "$INFO" $id | tee bgo_${SUFFIX}.out 
+            $BUGZ modify --comment-from "$INFO" $id | tee bgo.out 
             # attach logs
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo_${SUFFIX}.out
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo_${SUFFIX}.out
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo.out
+            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo.out
         fi
     else
         echo "Multiple bugs found, aborting"
