@@ -37,9 +37,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-vagrant-
 
-      - name: Run vagrant up
-        run: vagrant up
-
       - name: ssh into box after boot
         id: run
         run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
