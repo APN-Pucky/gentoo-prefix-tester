@@ -29,7 +29,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y git wget python3 python3-pip build-essential
       - uses: actions/checkout@v2
       - name: Install pybugz
-        run: python3 -m pip install git+https://github.com/williamh/pybugz.git
+        run: python3 -m pip install git+https://github.com/APN-Pucky/pybugz.git
       - name: fix cariage return
         run: sed -i.bak 's/\r//g' *.sh
       - name: run bootstrap
