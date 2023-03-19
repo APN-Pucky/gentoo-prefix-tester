@@ -43,11 +43,13 @@ BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
 # Search for existing bugs
 $BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
 echo "Failed: $TITLE"
-if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
+TITLEBUG=$( grep -c "$TITLE" bgo_${SUFFIX}.out )
+if [ $TITLEBUG -ge 1 ] ; then
   echo "found"
 else
   echo "not found"
 fi
+# We count with -c instead of -Fq due to cygwin...
 NOBUG=$( grep -c "Info: No bugs" bgo_${SUFFIX}.out )
 if [ $NOBUG -ge 1 ] ; then
     echo "Reporting the bug"
