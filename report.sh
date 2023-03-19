@@ -48,7 +48,8 @@ if grep -Fq "$TITLE" bgo_${SUFFIX}.out ; then
 else
   echo "not found"
 fi
-if grep -Fq "Info: No bugs" bgo_${SUFFIX}.out ; then
+NOBUG=$( grep -c "Info: No bugs" bgo_${SUFFIX}.out )
+if [ $NOBUG -ge 1 ] ; then
     echo "Reporting the bug"
     # Post the bug
     $BUGZ post \
@@ -76,13 +77,15 @@ else
     echo "Bug exists"
     #exit 1
     # abort if multiple bugs reported
-    if grep -Fq "Info: 1 bug" bgo_${SUFFIX}.out
+    ONEBUG=$( grep -c "Info: 1 bug" bgo_${SUFFIX}.out)
+    if [ $ONEBUG -ge 1 ]
     then
         # get bug id
         id=$(cat bgo_${SUFFIX}.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
         $BUGZ get "$id" 1> bgo_${SUFFIX}.out 2> bgo_${SUFFIX}.err
-        if grep -Fq "$OS" bgo_${SUFFIX}.out
+        OSBUG=$(grep -c "$OS" bgo_${SUFFIX}.out)
+        if [ $OSBUG -ge 1 ]
         then
             # already reportet for this OS
             echo "Bug already reported for $OS"

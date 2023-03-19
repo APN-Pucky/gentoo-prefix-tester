@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/windows-2022.yml
   schedule:
-    - cron: "0 6 19 * *"
+    - cron: "0 6 18 * *"
 
 jobs:
   vagrant:

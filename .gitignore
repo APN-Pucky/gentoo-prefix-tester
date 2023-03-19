@@ -63,3 +63,4 @@ build-iPhoneSimulator/
 *.bz2
 *.err
 *.out
+*.txt
