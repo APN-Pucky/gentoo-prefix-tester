@@ -1,10 +1,10 @@
-name: windows-2022
+name: windows-2022-cygwin
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/windows-2022.yml
+      - .github/workflows/windows-2022-cygwin.yml
   schedule:
     - cron: "0 6 18 * *"
 
@@ -34,7 +34,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: bash -c -o igncr "unset PKG_CONFIG_PATH && mkdir --mode=a=rwxt /var/run/cygfork && source run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}""
+        run: bash -c -o igncr "unset PKG_CONFIG_PATH && mkdir --mode=a=rwxt /var/run/cygfork && source run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'"
         continue-on-error: true
 
       - name: Upload full.log

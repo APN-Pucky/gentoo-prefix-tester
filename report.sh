@@ -41,7 +41,7 @@ BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
 
 
 # Search for existing bugs
-$BUGZ search "$TITLE" -r alexander@neuwirth-informatik.de | tee bgo.out
+$BUGZ search "$TITLE" -r "alexander@neuwirth-informatik.de" | tee bgo.out
 echo "Failed: $TITLE"
 TITLEBUG=$( grep -c "$TITLE" bgo.out )
 if [ $TITLEBUG -ge 1 ] ; then
