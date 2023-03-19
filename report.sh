@@ -49,7 +49,7 @@ if [ $TITLEBUG -ge 1 ] ; then
 else
   echo "not found"
 fi
-# We count with -c instead of -Fq due to cygwin...
+# We count with -c instead of -Fq due to cygwin... -> turned out to be a bug pybugz with windwos/cygwin
 NOBUG=$( grep -c "Info: No bugs" bgo.out )
 if [ $NOBUG -ge 1 ] ; then
     echo "Reporting the bug"
@@ -86,13 +86,13 @@ else
         id=$(cat bgo.out | tail -n2 | head -n1 | awk '{print $1}')
         echo "Bug id: $id"
         $BUGZ get "$id" | tee bgo.out
-        OSBUG=$(grep -c "$OS" bgo.out)
+        OSBUG=$(grep -c "$OS $STABLE prefix" bgo.out)
         if [ $OSBUG -ge 1 ]
         then
             # already reportet for this OS
-            echo "Bug already reported for $OS"
+            echo "Bug already reported for $OS $STABLE prefix"
         else
-            echo "Adding message for $OS"
+            echo "Adding message for $OS $STABLE prefix"
             # add message fails for this os as well
             $BUGZ modify --comment-from "$INFO" $id | tee bgo.out 
             # attach logs

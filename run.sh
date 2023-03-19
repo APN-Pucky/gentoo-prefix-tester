@@ -62,7 +62,7 @@ then
     # Create info log
     echo "System:"  >> "info_${SUFFIX}.log"
     echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
-    echo "$OS" >> "info_${SUFFIX}.log"
+    echo "$OS $STABLE prefix" >> "info_${SUFFIX}.log"
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
