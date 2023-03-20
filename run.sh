@@ -1,6 +1,6 @@
 if [ ! $# -ge 3 ]
 then
-    echo "Usage: $0 Vagrantfile KEY UN/STABLE"
+    echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE"
     exit 1
 else
     VAGRANT_VAGRANTFILE=$1
@@ -38,7 +38,7 @@ fail () {
     echo "Failed to build prefix"
     FAILED=1
 }
-# Jump start prefix
+# Prepate prefix
 $VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die
 # if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
 if [ "$STABLE" = "UNSTABLE" ]
@@ -46,7 +46,8 @@ then
     # dodge macos sed -i option
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
-$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' >> "full_${SUFFIX}.log" || fail
+# Start bootstrap
+$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
 
 # if failed, report
 if [ $FAILED -eq 1 ]
