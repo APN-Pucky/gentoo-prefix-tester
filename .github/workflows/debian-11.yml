@@ -7,7 +7,7 @@ on:
       - Vagrantfile.debian-11
       - .github/workflows/debian-11.yml
   schedule:
-    - cron: "0 6 4 * *"
+    - cron: "0 6 3 * *"
 
 jobs:
   vagrant:
