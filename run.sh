@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ ! $# -ge 3 ]
 then
     echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE"
