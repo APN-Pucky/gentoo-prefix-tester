@@ -98,8 +98,8 @@ else
             # add message fails for this os as well
             $BUGZ modify --comment-from "$INFO" $id | tee bgo.out 
             # attach logs
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo.out
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo.out
+            $BUGZ attach --content-type "application/x-xz" --description "" $id $FULL | tee bgo.out
+            $BUGZ attach --content-type "application/x-xz" --description "" $id $BUILD | tee bgo.out
         fi
     else
         echo "Multiple bugs found, aborting"
