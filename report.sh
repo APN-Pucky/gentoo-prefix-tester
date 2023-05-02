@@ -29,8 +29,8 @@ TITLE="$TITLE: bootstrap-prefix.sh fails"
 
 # compress both logs with bz2
 # TODO do we want to keept the uncompressed logs with -k ?
-xz $FULL 
-xz $BUILD
+xz --compress -9e $FULL 
+xz --compress -9e $BUILD
 FULL=$FULL.xz
 BUILD=$BUILD.xz
 
