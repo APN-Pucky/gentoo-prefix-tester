@@ -2,8 +2,9 @@
 
 ## Bugzilla
 
-[Unconfirmed Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=UNCONFIRMED&component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844748&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
-[Confirmed Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=CONFIRMED&component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844748&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
+[Open Bugs](https://bugs.gentoo.org/buglist.cgi?component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844761&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
+
+[Resolved Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=RESOLVED&component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailcc1=1&emailtype1=substring&f1=reporter&list_id=6844770&o1=equals&query_format=advanced&v1=%25user%25)
 
 Test gentoo-prefix on different operating systems using vagrant in GitHub Actions CI.
 
