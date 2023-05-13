@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ ! $# -ge 3 ]
 then
     echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE"
@@ -47,7 +48,9 @@ then
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
 # Start bootstrap
+set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
 $VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
+set +o pipefail # reset pipefail
 
 # if failed, report
 if [ $FAILED -eq 1 ]

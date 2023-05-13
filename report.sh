@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ ! $# -eq 6 ]
 then
     echo "Usage: $0 OS STABLE FULL_LOG BUILD_LOG INFO_LOG KEY"
@@ -27,10 +28,11 @@ TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1
 TITLE="$TITLE: bootstrap-prefix.sh fails"
 
 # compress both logs with bz2
-bzip2 -z $FULL
-bzip2 -z $BUILD
-FULL=$FULL.bz2
-BUILD=$BUILD.bz2
+# TODO do we want to keept the uncompressed logs with -k ?
+xz --compress -9e $FULL 
+xz --compress -9e $BUILD
+FULL=$FULL.xz
+BUILD=$BUILD.xz
 
 # with explicit connection name to avoid missing default config error
 BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
@@ -73,8 +75,8 @@ if [ $NOBUG -ge 1 ] ; then
 
     id=$(grep "Info: Bug .* submitted" bgo.out | sed 's/[^0-9]//g')
     # Attach the logs
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo.out 
-    $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo.out 
+    $BUGZ attach --content-type "application/x-xz" --description "" $id $FULL | tee bgo.out 
+    $BUGZ attach --content-type "application/x-xz" --description "" $id $BUILD | tee bgo.out 
 else
     echo "Bug exists"
     #exit 1
@@ -96,8 +98,8 @@ else
             # add message fails for this os as well
             $BUGZ modify --comment-from "$INFO" $id | tee bgo.out 
             # attach logs
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $FULL | tee bgo.out
-            $BUGZ attach --content-type "application/x-bzip2" --description "" $id $BUILD | tee bgo.out
+            $BUGZ attach --content-type "application/x-xz" --description "" $id $FULL | tee bgo.out
+            $BUGZ attach --content-type "application/x-xz" --description "" $id $BUILD | tee bgo.out
         fi
     else
         echo "Multiple bugs found, aborting"

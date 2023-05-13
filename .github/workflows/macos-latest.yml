@@ -16,7 +16,6 @@ jobs:
       matrix:
         VAGRANTFILE: [LOCAL]
         STABLE: [STABLE, UNSTABLE]
-
     env:
       VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
 
