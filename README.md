@@ -38,4 +38,4 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 
 # Issues
 
-* Timeout after ~6h
+* Github CI times out after ~6h
