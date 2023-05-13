@@ -1,6 +1,6 @@
 # gentoo-prefix-tester
 
-## Bugzilla
+## Gentoo Bugzilla
 
 [Open Bugs](https://bugs.gentoo.org/buglist.cgi?component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844761&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
 
