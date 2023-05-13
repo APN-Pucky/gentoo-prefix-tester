@@ -1,16 +1,16 @@
-name: macos-12
+name: ubuntu-latest
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/macos-12.yml
+      - .github/workflows/ubuntu-latest.yml
   schedule:
-    - cron: "0 6 24 * *"
+    - cron: "0 6 25 * *"
 
 jobs:
   vagrant:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
