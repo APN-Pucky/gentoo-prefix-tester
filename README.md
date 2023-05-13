@@ -6,7 +6,10 @@
 
 [Resolved Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=RESOLVED&component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailcc1=1&emailtype1=substring&f1=reporter&list_id=6844770&o1=equals&query_format=advanced&v1=%25user%25)
 
+## Test map
+
 Test gentoo-prefix on different operating systems using vagrant in GitHub Actions CI.
+
 
 
 |  Gentoo | Debian  | Ubuntu  | CentOS  | Fedora  | MacOS | Windows |
