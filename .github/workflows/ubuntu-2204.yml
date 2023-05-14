@@ -34,8 +34,9 @@ jobs:
         with:
           path: ~/.vagrant.d/boxes
           key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-      - name: Cache gentoo-prefix stage
-        id: cache-vagrant
+
+      - name: Cache gentoo-prefix stage1
+        id: cache-stage1
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage1
@@ -43,7 +44,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" stage1
+        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 1
         continue-on-error: true
 
       - name: Upload full.log
@@ -69,6 +70,7 @@ jobs:
 
   stage2:
     runs-on: macos-12
+    needs: stage1
     strategy:
       fail-fast: false
       matrix:
@@ -92,9 +94,16 @@ jobs:
           path: ~/.vagrant.d/boxes
           key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
+      - name: Cache gentoo-prefix stage1
+        id: cache-stage1
+        uses: actions/cache@v3
+        with:
+          path: gentoo-prefix-stage1
+          key: ${{ runner.os }}-stage1-${{ hashFiles( matrix.VAGRANTFILE ) }}
+
       - name: run bootstrap
         id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" stage2
+        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 2
         continue-on-error: true
 
       - name: Upload full.log

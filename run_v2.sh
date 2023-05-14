@@ -16,11 +16,13 @@ else
     then
         # use the local system
         VAGRANTCMD="eval"
+        VAGRANTREMOTE=""
         VAGRANTSCP="scp "
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
-        VAGRANTSCP="vagrant ssh-config > conf && vagrant scp -F conf default:"
+        VAGRANTREMOTE="default:"
+        VAGRANTSCP="vagrant ssh-config > conf && vagrant scp -F conf "
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
 
         # export it to be used by vagrant
@@ -50,9 +52,18 @@ then
     # dodge macos sed -i option
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
+
+#Copy prev stages
+# does previois gentoo-prefix-stage exist?
+if [ -d "gentoo-prefix-stage$((STAGE-1))" ]
+then
+    # copy it to gentoo-prefix
+    "${VAGRANTSCP} gentoo-prefix-stage$((STAGE-1)) ${VAGRANTREMOTE}gentoo-prefix"
+fi
+"${VAGRANTSCP} ${VAGRANTREMOTE}gentoo-prefix gentoo-prefix-stage${STAGE}"
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
-$VAGRANTCMD "./bootstrap-prefix.sh \$PWD/gentoo-prefix $STAGE" | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
+$VAGRANTCMD "./bootstrap-prefix.sh \$PWD/gentoo-prefix stage$STAGE" | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
 set +o pipefail # reset pipefail
 
 # if failed, report
@@ -73,7 +84,7 @@ then
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
-    echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE) for stage $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
+    echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE) for stage$STAGE (lower ones before)" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Error message:" >> "info_${SUFFIX}.log"
     echo "$(tail -n10 full_${SUFFIX}.log )" >> "info_${SUFFIX}.log"
@@ -82,11 +93,11 @@ then
     echo "$EXTRA" >> "info_${SUFFIX}.log"
 
     #vagrant destroy
-    ./report_v2.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY" ${STAGE}
+    ./report_v2.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY" stage${STAGE}
     exit 1
 else
     echo "Success to build prefix"
-    "${VAGRANTSCP}gentoo-prefix" "gentoo-prefix-${STAGE}"
+    "${VAGRANTSCP} ${VAGRANTREMOTE}gentoo-prefix gentoo-prefix-${STAGE}"
     #vagrant destroy
     exit 0
 fi
