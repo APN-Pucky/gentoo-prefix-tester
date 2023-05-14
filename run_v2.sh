@@ -17,12 +17,12 @@ else
         # use the local system
         VAGRANTCMD="eval"
         VAGRANTREMOTE=""
-        VAGRANTSCP="scp "
+        VAGRANTSCP="scp -r "
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
         VAGRANTREMOTE="default:"
-        VAGRANTSCP="vagrant ssh-config > conf && scp -F conf "
+        VAGRANTSCP="vagrant ssh-config | sed 's/Host .*/Host default/' > conf && scp -r -F conf "
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
 
         # export it to be used by vagrant
@@ -98,6 +98,7 @@ then
 else
     echo "Success to build prefix"
     "${VAGRANTSCP} ${VAGRANTREMOTE}gentoo-prefix gentoo-prefix-${STAGE}"
+    ls 
     #vagrant destroy
     exit 0
 fi

@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         VAGRANTFILE: [Vagrantfile.ubuntu-2204]
-        STABLE: [STABLE, UNSTABLE]
+        STABLE: [STABLE]
         PSTAGE: [0]
         ISTAGE: [1]
 
