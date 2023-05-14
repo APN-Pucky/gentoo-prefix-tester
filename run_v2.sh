@@ -59,7 +59,7 @@ fi
 if [ -d "gentoo-prefix-stage$((STAGE-1))" ]
 then
     # copy it to gentoo-prefix
-    "${VAGRANTSCP} gentoo-prefix-stage$((STAGE-1)) ${VAGRANTREMOTE}gentoo-prefix"
+    ${VAGRANTSCP} "gentoo-prefix-stage$((STAGE-1))" "${VAGRANTREMOTE}gentoo-prefix"
 fi
 "${VAGRANTSCP} ${VAGRANTREMOTE}gentoo-prefix gentoo-prefix-stage${STAGE}"
 # Start bootstrap

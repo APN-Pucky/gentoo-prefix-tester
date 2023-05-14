@@ -37,21 +37,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
         id: cache-pstage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
         id: cache-istage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: run bootstrap
         id: run
@@ -106,21 +106,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
         id: cache-pstage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
         id: cache-istage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: run bootstrap
         id: run
@@ -175,21 +175,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
         id: cache-pstage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
         id: cache-istage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: run bootstrap
         id: run
@@ -244,21 +244,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
         id: cache-pstage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
         id: cache-istage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
+          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: run bootstrap
         id: run
