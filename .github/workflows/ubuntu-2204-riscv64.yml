@@ -32,7 +32,7 @@ jobs:
       - run: brew install qemu
       - run: vagrant plugin install vagrant-qemu
       - name: Fix qemu, riscv64 needs no cpu info
-        run: sed -i 's/.*-cpu.*//g' $(find ~/.vagrant.d/gems -name "driver.rb" | grep vagrant-qemu) 
+        run: sed -i.bak 's/.*-cpu.*//g' $(find ~/.vagrant.d/gems -name "driver.rb" | grep vagrant-qemu) 
       
 
       - name: Cache Vagrant boxes
