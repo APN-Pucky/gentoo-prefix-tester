@@ -19,6 +19,7 @@ else
         VAGRANTREMOTE=""
         #VAGRANTSCP="scp -r "
         VAGRANTSCP="rsync -Wa "
+        VAGRANTSCPE=""
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
@@ -31,7 +32,8 @@ else
         vagrant up
         vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
         #VAGRANTSCP="scp -r -F conf "
-        VAGRANTSCP="rsync -Wa -e 'ssh -l vagrant -F conf' "
+        VAGRANTSCP="rsync -Wa -e "
+        VAGRANTSCPE="ssh -l vagrant -F conf"
     fi
     SUFFIX="${STAGE}_${STABLE}_${OS}_${TIME}"
 fi
@@ -65,7 +67,7 @@ PSTAGE=${PSTAGE/4/3}
 if [ -d "gentoo-prefix-$PSTAGE" ]
 then
     # copy it to gentoo-prefix
-    $VAGRANTSCP "gentoo-prefix-$PSTAGE" "${VAGRANTREMOTE}gentoo-prefix"
+    $VAGRANTSCP "$VAGRANTSCPE" "gentoo-prefix-$PSTAGE" "${VAGRANTREMOTE}gentoo-prefix"
 fi
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
@@ -105,7 +107,7 @@ else
     echo "Success to build prefix"
     # remove potential cached stage
     rm -rf "gentoo-prefix-${STAGE}"
-    $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
+    $VAGRANTSCP "$VAGRANTSCPE" "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
 
     # useful for debugging
     pwd
