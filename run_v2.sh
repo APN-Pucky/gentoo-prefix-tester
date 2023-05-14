@@ -22,7 +22,7 @@ else
     else
         VAGRANTCMD="vagrant ssh -c"
         VAGRANTREMOTE="default:"
-        VAGRANTSCP="vagrant ssh-config > conf && vagrant scp -F conf "
+        VAGRANTSCP="vagrant ssh-config > conf && scp -F conf "
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
 
         # export it to be used by vagrant
