@@ -29,7 +29,7 @@ jobs:
 
       - name: run bootstrap
         id: run
-        run: unset PKG_CONFIG_PATH && ./run_v2.sh ${{ matrix.VAGRANTFILE }} FAKEAPIKEYREPLACEITWHENSTABLE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" stage1
+        run: unset PKG_CONFIG_PATH && ./run_v2.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" stage1
         continue-on-error: true
 
       - name: Upload full.log

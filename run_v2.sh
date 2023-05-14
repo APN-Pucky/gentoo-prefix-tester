@@ -71,7 +71,7 @@ then
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
-    echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE)" >> "info_${SUFFIX}.log"
+    echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE) for stage $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Error message:" >> "info_${SUFFIX}.log"
     echo "$(tail -n10 full_${SUFFIX}.log )" >> "info_${SUFFIX}.log"
