@@ -41,13 +41,13 @@ runs:
       uses: actions/cache@v3
       with:
         path: gentoo-prefix-${{ inputs.PSTAGE }}
-        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.PSTAGE }}
+        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.PSTAGE }}-${{ github.run_id }}
     - name: Cache gentoo-prefix ${{ inputs.ISTAGE }}
       id: cache-istage
       uses: actions/cache@v3
       with:
         path: gentoo-prefix-${{ inputs.ISTAGE }}
-        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}
+        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}-${{ github.run_id }}
 
     - name: run bootstrap
       shell: bash

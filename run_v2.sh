@@ -107,6 +107,7 @@ else
     rm -rf "gentoo-prefix-${STAGE}"
     $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
 
+    # useful for debugging
     pwd
     ls 
 
