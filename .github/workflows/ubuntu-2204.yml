@@ -13,275 +13,41 @@ on:
 jobs:
   stage1:
     runs-on: macos-12
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu-2204]
-        STABLE: [STABLE]
-        PSTAGE: [0]
-        ISTAGE: [1]
-
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
-
-      - name: Cache Vagrant boxes
-        id: cache-vagrant
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
-        id: cache-pstage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
-        id: cache-istage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: run bootstrap
-        id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ matrix.ISTAGE }}
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: full_log
-          path: full*
-
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: build_log
-          path: build*
-
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+          VAGRANTFILE: Vagrantfile.ubuntu-2204
+          STABLE: STABLE
+          PSTAGE: stage0
+          ISTAGE: stage1
 
   stage2:
     runs-on: macos-12
-    needs: stage1
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu-2204]
-        STABLE: [STABLE]
-        PSTAGE: [1]
-        ISTAGE: [2]
-
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
-
-      - name: Cache Vagrant boxes
-        id: cache-vagrant
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
-        id: cache-pstage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
-        id: cache-istage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: run bootstrap
-        id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ matrix.ISTAGE }}
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: full_log
-          path: full*
-
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: build_log
-          path: build*
-
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+          VAGRANTFILE: Vagrantfile.ubuntu-2204
+          STABLE: STABLE
+          PSTAGE: stage1
+          ISTAGE: stage2
 
   stage3:
     runs-on: macos-12
-    needs: stage2
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu-2204]
-        STABLE: [STABLE]
-        PSTAGE: [2]
-        ISTAGE: [3]
-
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
-
-      - name: Cache Vagrant boxes
-        id: cache-vagrant
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
-        id: cache-pstage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
-        id: cache-istage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: run bootstrap
-        id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ matrix.ISTAGE }}
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: full_log
-          path: full*
-
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: build_log
-          path: build*
-
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+          VAGRANTFILE: Vagrantfile.ubuntu-2204
+          STABLE: STABLE
+          PSTAGE: stage2
+          ISTAGE: stage3
 
   stage4:
     runs-on: macos-12
-    needs: stage3
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [Vagrantfile.ubuntu-2204]
-        STABLE: [STABLE]
-        PSTAGE: [3]
-        ISTAGE: [4]
-
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
+          VAGRANTFILE: Vagrantfile.ubuntu-2204
+          STABLE: STABLE
+          PSTAGE: stage3
+          ISTAGE: stage4
 
-      - name: Cache Vagrant boxes
-        id: cache-vagrant
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ matrix.VAGRANTFILE }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
-        id: cache-pstage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.PSTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
-        id: cache-istage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-stage${{ matrix.ISTAGE }}
-          key: ${{ matrix.VAGRANTFILE }}-${{ matrix.STABLE }}-stage${{ matrix.ISTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
-
-      - name: run bootstrap
-        id: run
-        run: ./run_v2.sh  ${{ matrix.VAGRANTFILE }} REPLACE ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ matrix.ISTAGE }}
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: full_log
-          path: full*
-
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: build_log
-          path: build*
-
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
