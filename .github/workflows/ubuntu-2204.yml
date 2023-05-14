@@ -36,7 +36,7 @@ jobs:
 
   stage3:
     runs-on: macos-12
-    needs: stage3
+    needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
