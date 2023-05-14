@@ -64,3 +64,4 @@ build-iPhoneSimulator/
 *.err
 *.out
 *.txt
+test

@@ -9,8 +9,8 @@ on:
     - cron: "0 6 18 * *"
 
 defaults:
-    run:
-        shell: wsl-bash {0}
+  run:
+    shell: wsl-bash {0}
 
 jobs:
   vagrant:
@@ -33,10 +33,10 @@ jobs:
       - name: fix cariage return
         run: sed -i.bak 's/\r//g' *.sh
       - name: Fix to run as root in wsl
-        run: wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && sed -i 's/UID/NOUID/g' bootstrap-prefix.sh 
+        run: wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && sed -i 's/UID/NOUID/g' bootstrap-prefix.sh
       - name: run bootstrap
         id: run
-        run: ./run.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+        run: ./run_v1.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
         continue-on-error: true
 
       - name: Upload full.log

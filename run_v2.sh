@@ -1,13 +1,14 @@
 #!/bin/bash
-if [ ! $# -ge 3 ]
+if [ ! $# -eq 5 ]
 then
-    echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE"
+    echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE EXTRA STAGE"
     exit 1
 else
     VAGRANT_VAGRANTFILE=$1
     KEY=$2
     STABLE=$3
     EXTRA=$4
+    STAGE=$5
 
     TIME="$(date +%Y%m%d%H%M%S)"
     # if VAGRANT_FILE is "LOCAL" 
@@ -49,7 +50,7 @@ then
 fi
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
-$VAGRANTCMD './bootstrap-prefix.sh $PWD/gentoo-prefix noninteractive' | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
+$VAGRANTCMD "./bootstrap-prefix.sh \$PWD/gentoo-prefix $STAGE" | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
 set +o pipefail # reset pipefail
 
 # if failed, report
