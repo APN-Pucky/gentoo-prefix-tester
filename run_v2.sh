@@ -80,7 +80,7 @@ then
     echo "$EXTRA" >> "info_${SUFFIX}.log"
 
     #vagrant destroy
-    ./report.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY"
+    ./report_v2.sh "$OS" "$STABLE" "full_${SUFFIX}.log" "build_${SUFFIX}.log" "info_${SUFFIX}.log" "$KEY" $STAGE
     exit 1
 else
     echo "Success to build prefix"
