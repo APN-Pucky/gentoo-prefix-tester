@@ -97,7 +97,7 @@ then
     exit 1
 else
     echo "Success to build prefix"
-    "${VAGRANTSCP} ${VAGRANTREMOTE}gentoo-prefix gentoo-prefix-stage${STAGE}"
+    $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-stage${STAGE}"
     ls 
     #vagrant destroy
     exit 0
