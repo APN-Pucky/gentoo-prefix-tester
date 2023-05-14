@@ -68,7 +68,7 @@ if [ -d "gentoo-prefix-$PSTAGE" ]
 then
     # copy it to gentoo-prefix
     ls
-    $VAGRANTSCP "$VAGRANTSCPE" gentoo-prefix-$PSTAGE/* "${VAGRANTREMOTE}gentoo-prefix"
+    $VAGRANTSCP "$VAGRANTSCPE" gentoo-prefix-$PSTAGE/* ${VAGRANTREMOTE}gentoo-prefix
     echo "Copied previous $PSTAGE"
 else
     echo "No previous stage found"
@@ -111,7 +111,7 @@ else
     echo "Success to build prefix"
     # remove potential cached stage
     rm -rf "gentoo-prefix-${STAGE}"
-    $VAGRANTSCP "$VAGRANTSCPE" "${VAGRANTREMOTE}gentoo-prefix/*" "gentoo-prefix-${STAGE}"
+    $VAGRANTSCP "$VAGRANTSCPE" ${VAGRANTREMOTE}gentoo-prefix/* gentoo-prefix-${STAGE}
 
     # useful for debugging
     pwd
