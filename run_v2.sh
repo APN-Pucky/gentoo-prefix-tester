@@ -18,8 +18,8 @@ else
         VAGRANTCMD="eval"
         VAGRANTREMOTE=""
         #VAGRANTSCP="scp -r "
-        VAGRANTSCP="rsync -Wa "
-        VAGRANTSCPE=""
+        VAGRANTSCP="rsync -Wav -e "
+        VAGRANTSCPE="ssh"
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
@@ -67,7 +67,11 @@ PSTAGE=${PSTAGE/4/3}
 if [ -d "gentoo-prefix-$PSTAGE" ]
 then
     # copy it to gentoo-prefix
+    ls
     $VAGRANTSCP "$VAGRANTSCPE" gentoo-prefix-$PSTAGE/* "${VAGRANTREMOTE}gentoo-prefix"
+    echo "Copied previous $PSTAGE"
+else
+    echo "No previous stage found"
 fi
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout

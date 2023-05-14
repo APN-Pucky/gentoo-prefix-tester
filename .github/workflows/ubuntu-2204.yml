@@ -55,5 +55,5 @@ jobs:
           VAGRANTFILE: Vagrantfile.ubuntu-2204
           STABLE: STABLE
           PSTAGE: stage3
-          ISTAGE: stage4
+          ISTAGE: noninteractive
           APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
