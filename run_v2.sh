@@ -22,13 +22,14 @@ else
     else
         VAGRANTCMD="vagrant ssh -c"
         VAGRANTREMOTE="default:"
-        VAGRANTSCP="vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf && scp -r -F conf "
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
 
         # export it to be used by vagrant
         export VAGRANT_VAGRANTFILE=$1
         # Start the VM
         vagrant up
+        vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
+        VAGRANTSCP="scp -r -F conf "
     fi
     SUFFIX="${STABLE}_${OS}_${TIME}"
 fi
