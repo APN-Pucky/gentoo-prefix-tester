@@ -12,7 +12,7 @@ jobs:
   stage1:
     runs-on: macos-latest
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -24,7 +24,7 @@ jobs:
     runs-on: macos-latest
     needs: stage1
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -36,7 +36,7 @@ jobs:
     runs-on: macos-latest
     needs: stage2
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -48,7 +48,7 @@ jobs:
     runs-on: macos-latest
     needs: stage3
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
