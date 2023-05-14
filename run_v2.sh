@@ -84,7 +84,7 @@ then
     # Create info log
     echo "System:"  >> "info_${SUFFIX}.log"
     echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
-    echo "$OS $STABLE prefix" >> "info_${SUFFIX}.log"
+    echo "$OS $STABLE prefix" >> "info_${SUFFIX}.log" # CRITICAL: this is used by report_v2.sh to search for already reported bugs
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
@@ -102,6 +102,18 @@ then
 else
     echo "Success to build prefix"
     $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
+    echo "This bug seems to be resolved for $OS $STABLE prefix"  >> "info_${SUFFIX}.log" # CRITICAL: this is used by resolve_v2.sh to search for already resolved bugs
+    echo ""  >> "info_${SUFFIX}.log"
+    echo "System:"  >> "info_${SUFFIX}.log"
+    echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
+    echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
+    echo "bootstrap-prefix.sh in mode $STABLE for $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
+    echo "" >> "info_${SUFFIX}.log"
+    echo "Extra info:" >> "info_${SUFFIX}.log"
+    echo "$EXTRA" >> "info_${SUFFIX}.log"
+    ./resolve_v2.sh "$OS" "$STABLE" "info_${SUFFIX}.log" "$KEY" ${STAGE}
+
+
     ls 
     #vagrant destroy
     exit 0
