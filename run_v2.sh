@@ -18,7 +18,7 @@ else
         VAGRANTCMD="eval"
         VAGRANTREMOTE=""
         #VAGRANTSCP="scp -r "
-        VAGRANTSCP="rsync -Wav "
+        VAGRANTSCP="rsync -Wa "
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
@@ -31,7 +31,7 @@ else
         vagrant up
         vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
         #VAGRANTSCP="scp -r -F conf "
-        VAGRANTSCP="rsync -Wav -e \"ssh -F conf\" "
+        VAGRANTSCP="rsync -Wa -e 'ssh -l vagrant -F conf' "
     fi
     SUFFIX="${STAGE}_${STABLE}_${OS}_${TIME}"
 fi
@@ -107,6 +107,9 @@ else
     rm -rf "gentoo-prefix-${STAGE}"
     $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
 
+    pwd
+    ls 
+
     echo "This bug seems to be resolved for $OS $STABLE prefix"  >> "info_${SUFFIX}.log" # CRITICAL: this is used by resolve_v2.sh to search for already resolved bugs
     echo ""  >> "info_${SUFFIX}.log"
     echo "System:"  >> "info_${SUFFIX}.log"
@@ -118,8 +121,6 @@ else
     echo "$EXTRA" >> "info_${SUFFIX}.log"
     ./resolve_v2.sh "$OS" "$STABLE" "info_${SUFFIX}.log" "$KEY" ${STAGE}
 
-
-    ls 
     #vagrant destroy
     exit 0
 fi
