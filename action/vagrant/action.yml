@@ -15,65 +15,66 @@ inputs:
   ISTAGE:
     description: "stage to run and save"
     default: "noninteractive"
+  APIKEY:
+    description: "Gentoo bugzilla API key"
+    default: "REPLACE"
 runs:
   using: "composite"
-  env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-  steps:  
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      - name: Install pybugz
-        shell: bash
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install pybugz
+      shell: bash
+      run: python -m pip install git+https://github.com/williamh/pybugz.git
 
-      - name: Cache Vagrant boxes
-        id: cache-vagrant
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ inputs.VAGRANTFILE }}-vagrant-${{ hashFiles( inputs.VAGRANTFILE ) }}
+    - name: Cache Vagrant boxes
+      id: cache-vagrant
+      uses: actions/cache@v3
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ inputs.VAGRANTFILE }}-vagrant-${{ hashFiles( inputs.VAGRANTFILE ) }}
 
-      - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
-        id: cache-pstage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-${{ inputs.PSTAGE }}
-          key: ${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.PSTAGE }}-${{ hashFiles( inputs.VAGRANTFILE ) }}
+    - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
+      id: cache-pstage
+      uses: actions/cache@v3
+      with:
+        path: gentoo-prefix-${{ inputs.PSTAGE }}
+        key: ${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.PSTAGE }}-${{ hashFiles( inputs.VAGRANTFILE ) }}
 
-      - name: Cache gentoo-prefix ${{ inputs.ISTAGE }}
-        id: cache-istage
-        uses: actions/cache@v3
-        with:
-          path: gentoo-prefix-${{ inputs.ISTAGE }}
-          key: ${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}-${{ hashFiles( inputs.VAGRANTFILE ) }}
+    - name: Cache gentoo-prefix ${{ inputs.ISTAGE }}
+      id: cache-istage
+      uses: actions/cache@v3
+      with:
+        path: gentoo-prefix-${{ inputs.ISTAGE }}
+        key: ${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}-${{ hashFiles( inputs.VAGRANTFILE ) }}
 
-      - name: run bootstrap
-        shell: bash
-        id: run
-        run: ./run_v2.sh  ${{ inputs.VAGRANTFILE }} REPLACE ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
-        continue-on-error: true
+    - name: run bootstrap
+      shell: bash
+      id: run
+      run: ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      continue-on-error: true
 
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: full_log
-          path: full*
+    - name: Upload full.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: full_log
+        path: full*
 
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: build_log
-          path: build*
+    - name: Upload build.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: build_log
+        path: build*
 
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
+    - name: Upload info.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: info_log
+        path: info*
 
-      - name: Check on failures
-        shell: bash
-        if: steps.run.outcome != 'success'
-        run: exit 1
+    - name: Check on failures
+      shell: bash
+      if: steps.run.outcome != 'success'
+      run: exit 1

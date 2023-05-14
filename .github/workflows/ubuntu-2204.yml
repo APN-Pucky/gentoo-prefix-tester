@@ -20,6 +20,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
     runs-on: macos-12
@@ -30,6 +31,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage1
           ISTAGE: stage2
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
     runs-on: macos-12
@@ -40,6 +42,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage2
           ISTAGE: stage3
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
     runs-on: macos-12
@@ -50,4 +53,5 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage3
           ISTAGE: stage4
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
