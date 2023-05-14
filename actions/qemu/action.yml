@@ -31,6 +31,14 @@ runs:
       shell: bash
       run: python -m pip install git+https://github.com/williamh/pybugz.git
 
+    - run: brew install qemu
+      shell: bash
+    - run: vagrant plugin install vagrant-qemu
+      shell: bash
+    - name: Fix qemu, riscv64 needs no cpu info
+      shell: bash
+      run: sed -i.bak 's/.*-cpu.*//g' $(find ~/.vagrant.d/gems -name "driver.rb" | grep vagrant-qemu) 
+
     - name: Cache Vagrant boxes
       id: cache-vagrant
       if: ${{ inputs.VAGRANTFILE != 'LOCAL' }}

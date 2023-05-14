@@ -17,7 +17,8 @@ else
         # use the local system
         VAGRANTCMD="eval"
         VAGRANTREMOTE=""
-        VAGRANTSCP="scp -r "
+        #VAGRANTSCP="scp -r "
+        VAGRANTSCP="rsync -Wav "
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
         VAGRANTCMD="vagrant ssh -c"
@@ -29,7 +30,8 @@ else
         # Start the VM
         vagrant up
         vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
-        VAGRANTSCP="scp -r -F conf "
+        #VAGRANTSCP="scp -r -F conf "
+        VAGRANTSCP="rsync -Wav -e \"ssh -F conf\" "
     fi
     SUFFIX="${STAGE}_${STABLE}_${OS}_${TIME}"
 fi
