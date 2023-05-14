@@ -67,7 +67,7 @@ PSTAGE=${PSTAGE/4/3}
 if [ -d "gentoo-prefix-$PSTAGE" ]
 then
     # copy it to gentoo-prefix
-    $VAGRANTSCP "$VAGRANTSCPE" "gentoo-prefix-$PSTAGE" "${VAGRANTREMOTE}gentoo-prefix"
+    $VAGRANTSCP "$VAGRANTSCPE" gentoo-prefix-$PSTAGE/* "${VAGRANTREMOTE}gentoo-prefix"
 fi
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
@@ -107,7 +107,7 @@ else
     echo "Success to build prefix"
     # remove potential cached stage
     rm -rf "gentoo-prefix-${STAGE}"
-    $VAGRANTSCP "$VAGRANTSCPE" "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
+    $VAGRANTSCP "$VAGRANTSCPE" "${VAGRANTREMOTE}gentoo-prefix/*" "gentoo-prefix-${STAGE}"
 
     # useful for debugging
     pwd
