@@ -32,7 +32,7 @@ else
         vagrant up
         vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
         #VAGRANTSCP="scp -r -F conf "
-        VAGRANTSCP="rsync -Wa -e "
+        VAGRANTSCP="rsync -Wav -e "
         VAGRANTSCPE="ssh -l vagrant -F conf"
     fi
     SUFFIX="${STAGE}_${STABLE}_${OS}_${TIME}"
