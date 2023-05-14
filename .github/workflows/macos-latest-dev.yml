@@ -9,47 +9,49 @@ on:
     - cron: "0 6 24 * *"
 
 jobs:
-  vagrant:
+  stage1:
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [LOCAL]
-        STABLE: [STABLE, UNSTABLE]
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage0
+          ISTAGE: stage1
+          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: run bootstrap
-        id: run
-        run: unset PKG_CONFIG_PATH && ./run_v2.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" 1
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
+  stage2:
+    runs-on: macos-latest
+    needs: stage1
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          name: full_log
-          path: full*
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage1
+          ISTAGE: stage2
+          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
+  stage3:
+    runs-on: macos-latest
+    needs: stage2
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          name: build_log
-          path: build*
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage2
+          ISTAGE: stage3
+          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
+  stage4:
+    runs-on: macos-latest
+    needs: stage3
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
-          name: info_log
-          path: info*
-
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage3
+          ISTAGE: stage4
+          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}

@@ -101,7 +101,10 @@ then
     exit 1
 else
     echo "Success to build prefix"
+    # remove potential cached stage
+    rm -rf "gentoo-prefix-${STAGE}"
     $VAGRANTSCP "${VAGRANTREMOTE}gentoo-prefix" "gentoo-prefix-${STAGE}"
+
     echo "This bug seems to be resolved for $OS $STABLE prefix"  >> "info_${SUFFIX}.log" # CRITICAL: this is used by resolve_v2.sh to search for already resolved bugs
     echo ""  >> "info_${SUFFIX}.log"
     echo "System:"  >> "info_${SUFFIX}.log"
