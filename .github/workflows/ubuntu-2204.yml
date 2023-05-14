@@ -45,14 +45,14 @@ jobs:
           key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.PSTAGE }}
-        id: cache-stage${{ matrix.PSTAGE }}
+        id: cache-pstage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.PSTAGE }}
           key: ${{ runner.os }}-${{ matrix.STABLE }}-stage${{ matrix.PSTAGE }}-${{ hashFiles( matrix.VAGRANTFILE ) }}
 
       - name: Cache gentoo-prefix stage${{ matrix.ISTAGE }}
-        id: cache-stage${{ matrix.ISTAGE }}
+        id: cache-istage
         uses: actions/cache@v3
         with:
           path: gentoo-prefix-stage${{ matrix.ISTAGE }}
