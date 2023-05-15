@@ -34,7 +34,7 @@ runs:
     - name: Setup cygwin
       uses: cygwin/cygwin-install-action@master
       with:
-        packages: "wget, gcc-g++"
+        packages: "wget, gcc-g++, rsync"
 
     - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
       id: cache-pstage
