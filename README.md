@@ -39,3 +39,8 @@ Test gentoo-prefix on different operating systems using vagrant in GitHub Action
 # Issues
 
 * Github CI times out after ~6h
+
+# Related
+
+* https://github.com/awesomebytes/gentoo_prefix_ci
+* https://wiki.gentoo.org/wiki/Google_Summer_of_Code/2023/Ideas/Better_testing_infrastructure_for_Gentoo_Prefix
