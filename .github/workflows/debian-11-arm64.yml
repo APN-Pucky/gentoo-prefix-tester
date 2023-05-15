@@ -9,59 +9,59 @@ on:
   schedule:
     - cron: "0 6 4 * *"
 
+
 jobs:
-  vagrant:
+  stage1:
     runs-on: macos-12
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [Vagrantfile.debian-11-arm64]
-        STABLE: [STABLE, UNSTABLE]
-
     env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
       VAGRANT_DEFAULT_PROVIDER: qemu
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/qemu@main
         with:
-          python-version: "3.10"
-      - name: Install pybugz
-        run: python -m pip install git+https://github.com/williamh/pybugz.git
-      - run: brew install qemu
-      - run: vagrant plugin install vagrant-qemu
-      - name: Cache Vagrant boxes
-        uses: actions/cache@v2
+          VAGRANTFILE: Vagrantfile.debian-11-arm64
+          STABLE: STABLE
+          PSTAGE: stage0
+          ISTAGE: stage1
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+
+  stage2:
+    runs-on: macos-12
+    needs: stage1
+    env:
+      VAGRANT_DEFAULT_PROVIDER: qemu
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/qemu@main
         with:
-          path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${{ hashFiles( matrix.VAGRANTFILE ) }}
-          restore-keys: |
-            ${{ runner.os }}-vagrant-
+          VAGRANTFILE: Vagrantfile.debian-11-arm64
+          STABLE: STABLE
+          PSTAGE: stage1
+          ISTAGE: stage2
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: ssh into box after boot
-        id: run
-        run: ./run_v1.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
+  stage3:
+    runs-on: macos-12
+    needs: stage2
+    env:
+      VAGRANT_DEFAULT_PROVIDER: qemu
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/qemu@main
         with:
-          name: full_log
-          path: full*
+          VAGRANTFILE: Vagrantfile.debian-11-arm64
+          STABLE: STABLE
+          PSTAGE: stage2
+          ISTAGE: stage3
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
+  stage4:
+    runs-on: macos-12
+    needs: stage3
+    env:
+      VAGRANT_DEFAULT_PROVIDER: qemu
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/qemu@main
         with:
-          name: build_log
-          path: build*
-
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
-        with:
-          name: info_log
-          path: info*
-
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+          VAGRANTFILE: Vagrantfile.debian-11-arm64
+          STABLE: STABLE
+          PSTAGE: stage3
+          ISTAGE: noninteractive
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
