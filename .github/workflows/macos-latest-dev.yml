@@ -4,7 +4,6 @@ on:
   push:
     branches: ["main"]
     paths:
-      - run_v2.sh
       - .github/workflows/macos-latest-dev.yml
   schedule:
     - cron: "0 6 24 * *"
