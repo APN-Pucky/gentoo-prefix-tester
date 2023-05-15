@@ -12,51 +12,52 @@ defaults:
   run:
     shell: wsl-bash {0}
 
+
+
 jobs:
-  vagrant:
+  stage1:
     runs-on: windows-2022
-    strategy:
-      fail-fast: false
-      matrix:
-        VAGRANTFILE: [LOCAL]
-        STABLE: [STABLE, UNSTABLE]
-
-    env:
-      VAGRANT_VAGRANTFILE: ${{ matrix.VAGRANTFILE }}
-
     steps:
-      - uses: Vampire/setup-wsl@v2
-      - run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y git wget python3 python3-pip build-essential
-      - uses: actions/checkout@v2
-      - name: Install pybugz
-        run: python3 -m pip install git+https://github.com/APN-Pucky/pybugz.git
-      - name: fix cariage return
-        run: sed -i.bak 's/\r//g' *.sh
-      - name: Fix to run as root in wsl
-        run: wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && sed -i 's/UID/NOUID/g' bootstrap-prefix.sh
-      - name: run bootstrap
-        id: run
-        run: ./run_v1.sh ${{ matrix.VAGRANTFILE }} ${{secrets.GENTOO_BUGZILLA_API_KEY }} ${{ matrix.STABLE }} '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-        continue-on-error: true
-
-      - name: Upload full.log
-        uses: actions/upload-artifact@v3
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/wsl@main
         with:
-          name: full_log
-          path: full*
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage0
+          ISTAGE: stage1
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Upload build.log
-        uses: actions/upload-artifact@v3
+  stage2:
+    runs-on: windows-2022
+    needs: stage1
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/wsl@main
         with:
-          name: build_log
-          path: build*
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage1
+          ISTAGE: stage2
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Upload info.log
-        uses: actions/upload-artifact@v3
+  stage3:
+    runs-on: windows-2022
+    needs: stage2
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/wsl@main
         with:
-          name: info_log
-          path: info*
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage2
+          ISTAGE: stage3
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
-      - name: Check on failures
-        if: steps.run.outcome != 'success'
-        run: exit 1
+  stage4:
+    runs-on: windows-2022
+    needs: stage3
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/wsl@main
+        with:
+          VAGRANTFILE: LOCAL
+          STABLE: STABLE
+          PSTAGE: stage3
+          ISTAGE: noninteractive
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}  
