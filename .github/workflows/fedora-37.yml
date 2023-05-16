@@ -18,7 +18,7 @@ jobs:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
           PSTAGE: stage0
-          ISTAGE: stage1_log
+          ISTAGE: stage1
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
@@ -29,8 +29,8 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage1_log
-          ISTAGE: stage2_log
+          PSTAGE: stage1
+          ISTAGE: stage2
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
@@ -41,8 +41,8 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage2_log
-          ISTAGE: stage3_log
+          PSTAGE: stage2
+          ISTAGE: stage3
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
@@ -53,6 +53,6 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage3_log
+          PSTAGE: stage3
           ISTAGE: noninteractive
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
