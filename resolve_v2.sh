@@ -6,8 +6,8 @@ then
 else
     OS=$1
     STABLE=$2
-    KEY=$3
-    INFO=$4
+    INFO=$3
+    KEY=$4
     STAGE=$5
 fi
 
