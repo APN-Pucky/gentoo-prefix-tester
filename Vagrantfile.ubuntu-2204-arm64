@@ -3,7 +3,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "20230107"
   config.vm.provision :shell, path: "vagrant/bootstrap-apt.sh"
   config.vm.define 'ubuntu-2204-arm64'
-  config.vm.boot_timeout = 600
+  config.vm.boot_timeout = 6000
 
   config.vm.provider "qemu" do |qe|
     #qe.qemu_dir = "/usr/share/qemu"
