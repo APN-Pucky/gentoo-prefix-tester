@@ -46,7 +46,7 @@ runs:
         path: ~/.vagrant.d/boxes
         key: ${{ inputs.VAGRANTFILE }}-vagrant-${{ hashFiles( inputs.VAGRANTFILE ) }}
 
-    - run: vagrant up --provider qemu
+    - run: VAGRANT_VAGRANTFILE=${{ inputs.VAGRANTFILE }} vagrant up --provider qemu
       shell: bash
 
     - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
