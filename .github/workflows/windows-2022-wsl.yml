@@ -22,7 +22,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1_log
-          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
     runs-on: windows-2022
@@ -34,7 +34,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage1_log
           ISTAGE: stage2_log
-          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
     runs-on: windows-2022
@@ -46,7 +46,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage2_log
           ISTAGE: stage3_log
-          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
     runs-on: windows-2022
@@ -58,4 +58,4 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage3_log
           ISTAGE: noninteractive
-          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
