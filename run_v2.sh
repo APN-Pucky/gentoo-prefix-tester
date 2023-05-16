@@ -1,4 +1,16 @@
 #!/bin/bash
+
+# Stop Vagrant on failures
+die () {
+    echo "Unexpected error, aborting"
+    #vagrant destroy
+    exit 1
+}
+fail () {
+    echo "Failed to build prefix"
+    FAILED=1
+}
+
 if [ ! $# -eq 5 ]
 then
     echo "Usage: $0 Vagrantfile/LOCAL KEY UN/STABLE EXTRA STAGE"
@@ -29,7 +41,7 @@ else
         # export it to be used by vagrant
         export VAGRANT_VAGRANTFILE=$1
         # Start the VM
-        vagrant up
+        vagrant up || die
         vagrant ssh-config | sed 's/Host .*/Host default/' | tee conf
         #VAGRANTSCP="scp -r -F conf "
         VAGRANTSCP="rsync -Wa -e "
@@ -39,16 +51,6 @@ else
 fi
 FAILED=0
 
-# Stop Vagrant on failures
-die () {
-    echo "Unexpected error, aborting"
-    #vagrant destroy
-    exit 1
-}
-fail () {
-    echo "Failed to build prefix"
-    FAILED=1
-}
 # Prepare prefix if not already done, this avoids changing the prefix version during separate stages
 if [ -f bootstrap-prefix.sh ]
 then
