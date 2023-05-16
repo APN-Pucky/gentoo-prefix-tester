@@ -12,8 +12,6 @@ defaults:
   run:
     shell: wsl-bash {0}
 
-
-
 jobs:
   stage1:
     runs-on: windows-2022
@@ -23,7 +21,7 @@ jobs:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
           PSTAGE: stage0
-          ISTAGE: stage1
+          ISTAGE: stage1_log
           APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
@@ -34,8 +32,8 @@ jobs:
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
-          PSTAGE: stage1
-          ISTAGE: stage2
+          PSTAGE: stage1_log
+          ISTAGE: stage2_log
           APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
@@ -46,8 +44,8 @@ jobs:
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
-          PSTAGE: stage2
-          ISTAGE: stage3
+          PSTAGE: stage2_log
+          ISTAGE: stage3_log
           APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
@@ -58,6 +56,6 @@ jobs:
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
-          PSTAGE: stage3
+          PSTAGE: stage3_log
           ISTAGE: noninteractive
-          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}  
+          APIKEY: REPLACE${{ secrets.GENTOO_BUGZILLA_API_KEY }}

@@ -11,15 +11,15 @@ on:
 
 jobs:
   stage1:
-   runs-on: macos-12
-   steps:
-     - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
-       with:
-         VAGRANTFILE: Vagrantfile.fedora-37
-         STABLE: STABLE
-         PSTAGE: stage0
-         ISTAGE: stage1
-         APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+    runs-on: macos-12
+    steps:
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+        with:
+          VAGRANTFILE: Vagrantfile.fedora-37
+          STABLE: STABLE
+          PSTAGE: stage0
+          ISTAGE: stage1_log
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
     runs-on: macos-12
@@ -29,10 +29,10 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage1
-          ISTAGE: stage2
+          PSTAGE: stage1_log
+          ISTAGE: stage2_log
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
-  
+
   stage3:
     runs-on: macos-12
     needs: stage2
@@ -41,10 +41,10 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage2
-          ISTAGE: stage3
+          PSTAGE: stage2_log
+          ISTAGE: stage3_log
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
-  
+
   stage4:
     runs-on: macos-12
     needs: stage3
@@ -53,7 +53,6 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.fedora-37
           STABLE: STABLE
-          PSTAGE: stage3
+          PSTAGE: stage3_log
           ISTAGE: noninteractive
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
-  

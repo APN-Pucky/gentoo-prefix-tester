@@ -18,7 +18,7 @@ jobs:
           VAGRANTFILE: Vagrantfile.ubuntu-2204
           STABLE: STABLE
           PSTAGE: stage0
-          ISTAGE: stage1
+          ISTAGE: stage1_log
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
@@ -29,8 +29,8 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.ubuntu-2204
           STABLE: STABLE
-          PSTAGE: stage1
-          ISTAGE: stage2
+          PSTAGE: stage1_log
+          ISTAGE: stage2_log
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
@@ -41,8 +41,8 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.ubuntu-2204
           STABLE: STABLE
-          PSTAGE: stage2
-          ISTAGE: stage3
+          PSTAGE: stage2_log
+          ISTAGE: stage3_log
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
@@ -53,6 +53,6 @@ jobs:
         with:
           VAGRANTFILE: Vagrantfile.ubuntu-2204
           STABLE: STABLE
-          PSTAGE: stage3
+          PSTAGE: stage3_log
           ISTAGE: noninteractive
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
