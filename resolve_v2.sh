@@ -13,6 +13,10 @@ fi
 
 TITLE="bootstrap-prefix.sh $STAGE fails"
 
+
+# with explicit connection name to avoid missing default config error
+BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
+
 ###################
 # Resolve the bug #
 ###################
