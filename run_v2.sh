@@ -52,7 +52,7 @@ fi
 FAILED=0
 
 # Prepare prefix if not already done, this avoids changing the prefix version during separate stages
-if [ -f bootstrap-prefix.sh ]
+if [ ! -f bootstrap-prefix.sh ]
 then
 $VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die
 fi
