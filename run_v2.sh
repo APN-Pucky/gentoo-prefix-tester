@@ -80,9 +80,10 @@ else
 fi
 # Start bootstrap
 set -o pipefail # forward exit code from prefix to fail function, since we want to see exit tail in stdout
+echo "bootstrap start"
 $VAGRANTCMD "STOP_BOOTSTRAP_AFTER=${STAGE} ./bootstrap-prefix.sh \$PWD/gentoo-prefix noninteractive" | tee -a "full_${SUFFIX}.log" | tail -n100 || fail
 set +o pipefail # reset pipefail
-
+echo "bootstrap done"
 # if failed, report
 if [ $FAILED -eq 1 ]
 then
