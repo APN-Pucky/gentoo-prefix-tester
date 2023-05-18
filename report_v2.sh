@@ -27,6 +27,33 @@ fi
 
 TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1  | sed 's/.*portage\/\(.*\)\/temp.*/\1/')$(grep -i -A 1 "I tried running" $FULL | tail -n1 )
 TITLE="$TITLE: bootstrap-prefix.sh $STAGE fails"
+# EXTRAOS filters the OS name for the reports title, however we do include it in the title of the search!
+EXTRAOS="unknown"
+if [[ "$OS" == *"Linux"* ]] ; then
+  EXTRAOS="Linux"
+fi
+if [[ "$OS" == *"Darwin"* ]] ; then
+  EXTRAOS="Darwin"
+fi
+if [[ "$OS" == *"ubuntu"* ]] ; then
+  EXTRAOS="Ubuntu"
+fi
+if [[ "$OS" == *"CentOS"* ]] ; then
+  EXTRAOS="CentOS"
+fi
+if [[ "$OS" == *"Cygwin"* ]] ; then
+  EXTRAOS="Cygwin"
+fi
+if [[ "$os" == *"debian"* ]] ; then
+  extraos="Debian"
+fi
+if [[ "$os" == *"fedora"* ]] ; then
+  extraos="Fedora"
+fi
+if [[ "$os" == *"gentoo"* ]] ; then
+  extraos="Gentoo"
+fi
+
 
 # compress both logs with bz2
 # TODO do we want to keept the uncompressed logs with -k ?
@@ -62,7 +89,7 @@ if [ $NOBUG -ge 1 ] ; then
         -a prefix@gentoo.org \
         --component "Prefix Support"    \
         --version "unspecified"           \
-        --title "$TITLE"          \
+        --title "$TITLE (on $EXTRAOS)"          \
         --op-sys "Linux"                  \
         --platform "All"                  \
         --priority "Normal"               \
