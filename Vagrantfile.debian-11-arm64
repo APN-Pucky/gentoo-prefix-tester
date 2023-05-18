@@ -1,5 +1,6 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "perk/debian-11-genericcloud-arm64"
+    config.vm.box_version = "20230501-1367"
 
     config.vm.provision :shell, path: "vagrant/bootstrap-apt.sh"
     config.vm.define 'debian-11-arm64' 
