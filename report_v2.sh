@@ -38,7 +38,7 @@ fi
 if [[ "$OS" == *"ubuntu"* ]] ; then
   EXTRAOS="Ubuntu"
 fi
-if [[ "$OS" == *"CentOS"* ]] ; then
+if [[ "$OS" == *"centos"* ]] ; then
   EXTRAOS="CentOS"
 fi
 if [[ "$OS" == *"Cygwin"* ]] ; then
