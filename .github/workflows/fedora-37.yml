@@ -11,7 +11,7 @@ on:
 
 jobs:
   stage1:
-    runs-on: macos-12-xl
+    runs-on: macos-12
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
@@ -19,10 +19,10 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1
-          #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: macos-12-xl
+    runs-on: macos-12
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
@@ -31,10 +31,10 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage1
           ISTAGE: stage2
-          #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: macos-12-xl
+    runs-on: macos-12
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
@@ -43,10 +43,10 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage2
           ISTAGE: stage3
-          #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: macos-12-xl
+    runs-on: macos-12
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
@@ -55,4 +55,4 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage3
           ISTAGE: noninteractive
-          #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
