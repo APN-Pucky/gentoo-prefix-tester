@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/macos-latest.yml
+      - .github/workflows/macos-13.yml
   schedule:
     - cron: "0 6 24 * *"
 
