@@ -29,6 +29,13 @@ TITLE=$(grep -i -A 1 "Details might be found in the build log:" $FULL | tail -n1
 TITLE="$TITLE: bootstrap-prefix.sh $STAGE fails"
 # EXTRAOS filters the OS name for the reports title, however we do include it in the title of the search!
 EXTRAOS="unknown"
+if [[ "$OS" == *"Microsoft"* ]] ; then
+  if [[ "$OS" == *"Linux"* ]] ; then
+    EXTRAOS="WSL"
+  else
+    EXTRAOS="Microsoft"
+  fi
+fi
 if [[ "$OS" == *"Linux"* ]] ; then
   EXTRAOS="Linux"
 fi
