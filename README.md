@@ -10,6 +10,8 @@
 
 Test gentoo-prefix on different operating systems using vagrant in GitHub Actions CI.
 
+Most of the failure are due to the 6h CI limit.
+
 
 
 |  Gentoo | Debian  | Ubuntu  | CentOS  | Fedora  | MacOS | Windows |
