@@ -56,6 +56,8 @@ if [ ! -f bootstrap-prefix.sh ]
 then
 $VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die
 fi
+# MD5SUM hash now before changes
+$VAGRANTCMD 'md5sum bootstrap-prefix.sh >> bootstrap-prefix.md5sum' || die
 # if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
 if [ "$STABLE" = "UNSTABLE" ]
 then
@@ -100,6 +102,7 @@ then
     echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
     echo "$OS $STABLE prefix" >> "info_${SUFFIX}.log" # CRITICAL: this is used by report_v2.sh to search for already reported bugs
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
+    echo "MD5SUM bootstrap-prefix.sh: $($VAGRANTCMD 'cat bootstrap-prefix.md5sum')" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Steps to reproduce the bug:" >> "info_${SUFFIX}.log"
     echo "Run the bootstrap-prefix.sh in mode $STABLE (default STABLE) for $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
@@ -128,6 +131,7 @@ else
     echo "System:"  >> "info_${SUFFIX}.log"
     echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
+    echo "MD5SUM bootstrap-prefix.sh: $($VAGRANTCMD 'cat bootstrap-prefix.md5sum')" >> "info_${SUFFIX}.log"
     echo "bootstrap-prefix.sh in mode $STABLE for $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
     echo "" >> "info_${SUFFIX}.log"
     echo "Extra info:" >> "info_${SUFFIX}.log"
