@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/macos-13.yml
   schedule:
-    - cron: "0 6 24 * *"
+    - cron: "0 6 23 * *"
 
 jobs:
   stage1:
