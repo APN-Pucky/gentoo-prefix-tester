@@ -1,4 +1,4 @@
-name: centos-7
+name: centos-8
 
 on:
   push:
