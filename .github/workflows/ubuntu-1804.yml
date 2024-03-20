@@ -12,7 +12,7 @@ on:
 
 jobs:
   stage1:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
         with:
@@ -23,7 +23,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: macos-11
+    runs-on: macos-12
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
@@ -35,7 +35,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: macos-11
+    runs-on: macos-12
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
@@ -47,7 +47,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: macos-11
+    runs-on: macos-12
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
