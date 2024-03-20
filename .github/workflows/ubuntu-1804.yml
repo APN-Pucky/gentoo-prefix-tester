@@ -7,7 +7,7 @@ on:
       - Vagrantfile.ubuntu-1804
       - .github/workflows/ubuntu-1804.yml
   schedule:
-    - cron: "0 6 10 * *"
+    - cron: "0 6 11 * *"
 
 
 jobs:
