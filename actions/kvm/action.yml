@@ -1,0 +1,102 @@
+name: "Gentoo Prefix stage tester"
+branding:
+  icon: "git-commit"
+  color: "purple"
+description: "Test a single stage of Gentoo Prefix"
+inputs:
+  VAGRANTFILE:
+    description: "Vagrantfile to use. LOCAL for bare metal"
+  STABLE:
+    description: "STABLE or UNSTABLE"
+    default: "STABLE"
+  PSTAGE:
+    description: "Previous stage to load from cache"
+    default: "none"
+  ISTAGE:
+    description: "stage to run and save"
+    default: "noninteractive"
+  APIKEY:
+    description: "Gentoo bugzilla API key"
+    default: "REPLACE"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install pybugz
+      shell: bash
+      run: python -m pip install git+https://github.com/williamh/pybugz.git
+
+    # https://github.blog/changelog/2024-04-02-github-actions-hardware-accelerated-android-virtualization-now-available/
+    - name: Enable KVM group perms
+      shell: bash
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+    # https://github.com/jonashackt/vagrant-travisci-libvrt
+    # https://wiki.debian.org/Vagrant
+    - name: Install libvirt kvm and Vagrant
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+        sudo apt-get install -y libvirt-daemon-system vagrant-libvirt
+        sudo usermod -a -G kvm $USER
+        sudo usermod -a -G libvirt $USER
+        sudo usermod -a -G libvirt-qemu $USER
+        sudo usermod -a -G vagrant $USER
+
+    - name: Cache Vagrant boxes
+      id: cache-vagrant
+      if: ${{ inputs.VAGRANTFILE != 'LOCAL' }}
+      uses: actions/cache@v3
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ inputs.VAGRANTFILE }}-vagrant-${{ hashFiles( inputs.VAGRANTFILE ) }}
+
+    - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
+      id: cache-pstage
+      uses: actions/cache@v3
+      with:
+        path: gentoo-prefix-${{ inputs.PSTAGE }}
+        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.PSTAGE }}-${{ github.run_id }}
+    - name: Cache gentoo-prefix ${{ inputs.ISTAGE }}
+      id: cache-istage
+      uses: actions/cache@v3
+      with:
+        path: gentoo-prefix-${{ inputs.ISTAGE }}
+        key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}-${{ github.run_id }}
+
+    - name: run bootstrap
+      shell: bash
+      id: run
+      run: ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      continue-on-error: true
+
+    - name: Upload full.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: full_log
+        path: full*
+
+    - name: Upload build.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: build_log
+        path: build*
+
+    - name: Upload info.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: info_log
+        path: info*
+
+    - name: Check on failures
+      shell: bash
+      if: steps.run.outcome != 'success'
+      run: exit 1
