@@ -49,6 +49,7 @@ runs:
         sudo usermod -a -G kvm $USER
         sudo usermod -a -G libvirt $USER
         sudo usermod -a -G libvirt-qemu $USER
+        sudo usermod -a -G libvirtd $USER
 
     - name: Cache Vagrant boxes
       id: cache-vagrant
