@@ -48,7 +48,6 @@ runs:
         sudo apt-get install -y libvirt-daemon-system vagrant-libvirt libvirt-clients
         sudo usermod -a -G kvm $USER
         sudo usermod -a -G libvirt $USER
-        sudo usermod -a -G libvirtd $USER
         sudo usermod -a -G libvirt-qemu $USER
         sudo systemctl restart libvirtd
 
