@@ -58,7 +58,9 @@ then
 $VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die "Failed to download bootstrap-prefix.sh"
 fi
 # MD5SUM hash now before changes, mac uses md5, linux md5sum
-$VAGRANTCMD '[[ $(command -v md5sum) ]] && md5sum "bootstrap-prefix.sh" > bootstrap-prefix.md5sum || [[ $(command -v md5) ]] && md5 "bootstrap-prefix.sh" > bootstrap-prefix.md5sum' || die "Failed to create md5sum"
+$VAGRANTCMD 'echo "Missing md5{,sum} command" > bootstrap-prefix.md5sum || true' || die "Failed to echo missing md5sum"
+$VAGRANTCMD '[[ $(command -v md5sum) ]] && md5sum "bootstrap-prefix.sh" > bootstrap-prefix.md5sum || true' || die "Failed to create md5sum"
+$VAGRANTCMD '[[ $(command -v md5) ]] && md5 "bootstrap-prefix.sh" > bootstrap-prefix.md5sum || true' || die "Failed to create md5"
 # if unstable, remove export STABLE_PREFIX="yes" for non interactive mode
 if [ "$STABLE" = "UNSTABLE" ]
 then
