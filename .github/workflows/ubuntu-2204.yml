@@ -6,8 +6,9 @@ on:
     paths:
       - Vagrantfile.ubuntu-2204
       - .github/workflows/ubuntu-2204.yml
+      - actions/kvm/action.yml
   schedule:
-    - cron: "0 6 21 * *"
+    - cron: "0 6 15 * *"
 
 jobs:
   stage1:
