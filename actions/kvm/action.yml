@@ -44,7 +44,7 @@ runs:
       shell: bash
       run: |
         sudo apt-get update
-        sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+        sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-dev qemu-kvm qemu-utils ruby-dev
         sudo apt-get install -y libvirt-daemon-system vagrant-libvirt
         sudo usermod -a -G kvm $USER
         sudo usermod -a -G libvirt $USER
