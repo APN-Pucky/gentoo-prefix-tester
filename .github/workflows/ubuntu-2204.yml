@@ -7,7 +7,7 @@ on:
       - Vagrantfile.ubuntu-2204
       - .github/workflows/ubuntu-2204.yml
   schedule:
-    - cron: "0 6 15 * *"
+    - cron: "0 6 16 * *"
 
 jobs:
   stage1:
