@@ -3,6 +3,7 @@
 # Stop Vagrant on failures
 die () {
     echo "Unexpected error, aborting"
+    echo "$*"
     #vagrant destroy
     exit 1
 }
@@ -54,7 +55,7 @@ FAILED=0
 # Prepare prefix if not already done, this avoids changing the prefix version during separate stages
 if [ ! -f bootstrap-prefix.sh ]
 then
-$VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die
+$VAGRANTCMD 'wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh' >> "full_${SUFFIX}.log" || die "Failed to download bootstrap-prefix.sh"
 fi
 # MD5SUM hash now before changes, mac uses md5, linux md5sum
 $VAGRANTCMD '[[ $(command -v md5sum) ]] && md5sum "bootstrap-prefix.sh" > bootstrap-prefix.md5sum' || die
