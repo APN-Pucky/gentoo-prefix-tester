@@ -1,57 +1,56 @@
-name: centos-7
+name: macos-14
 
 on:
   push:
     branches: ["main"]
     paths:
-      - Vagrantfile.centos-7
-      - .github/workflows/centos-7.yml
+      - .github/workflows/macos-14.yml
   schedule:
-    - cron: "0 6 2 * *"
+    - cron: "0 6 15 * *"
 
 jobs:
   stage1:
-    runs-on: macos-12
+    runs-on: macos-14
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
-          VAGRANTFILE: Vagrantfile.centos-7
+          VAGRANTFILE: LOCAL
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: macos-12
+    runs-on: macos-14
     needs: stage1
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
-          VAGRANTFILE: Vagrantfile.centos-7
+          VAGRANTFILE: LOCAL
           STABLE: STABLE
           PSTAGE: stage1
           ISTAGE: stage2
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: macos-12
+    runs-on: macos-14
     needs: stage2
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
-          VAGRANTFILE: Vagrantfile.centos-7
+          VAGRANTFILE: LOCAL
           STABLE: STABLE
           PSTAGE: stage2
           ISTAGE: stage3
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: macos-12
+    runs-on: macos-14
     needs: stage3
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/vagrant@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
-          VAGRANTFILE: Vagrantfile.centos-7
+          VAGRANTFILE: LOCAL
           STABLE: STABLE
           PSTAGE: stage3
           ISTAGE: noninteractive
