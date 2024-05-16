@@ -1,14 +1,14 @@
-name: fedora-39
+name: fedora-38
 
 env:
-  VFILE: Vagrantfile.fedora-39
+  VFILE: Vagrantfile.fedora-38
 
 on:
   push:
     branches: ["main"]
     paths:
-      - Vagrantfile.fedora-39
-      - .github/workflows/fedora-39.yml
+      - Vagrantfile.fedora-38
+      - .github/workflows/fedora-38.yml
   schedule:
     - cron: "0 6 6 * *"
 
