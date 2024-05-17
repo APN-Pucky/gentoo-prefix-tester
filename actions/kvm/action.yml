@@ -58,7 +58,7 @@ runs:
 
         wget https://github.com/qemu/qemu/raw/master/pc-bios/edk2-aarch64-code.fd.bz2
         bunzip2 edk2-aarch64-code.fd.bz2
-        mv edk2-aarch64-code.fd /usr/share/qemu/edk2-aarch64-code.fd
+        sudo mv edk2-aarch64-code.fd /usr/share/qemu/edk2-aarch64-code.fd
 
     - name: Cache Vagrant boxes
       id: cache-vagrant
