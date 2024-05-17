@@ -5,10 +5,11 @@ Vagrant.configure("2") do |config|
     config.vm.define 'debian-12-arm64' 
     config.vm.boot_timeout = 60000
 
-    config.vm.provider :libvirt do |libvirt|
-      libvirt.qemu_use_session = false
-      # if the above doesn't work, try uncommenting the following instead
-      #libvirt.uri = 'qemu:///system'
+    config.vm.provider "qemu" do |qe|
+      qe.ssh_port = 2222
+      qe.qemu_dir = "/usr/share/qemu"
+      qe.machine = "virt,highmem=on"
+      qe.cpu = "max"
     end
 
     # Prevent SharedFoldersEnableSymlinksCreate errors
