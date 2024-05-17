@@ -6,8 +6,6 @@ Vagrant.configure("2") do |config|
     config.vm.boot_timeout = 60000
 
     config.vm.provider "qemu" do |qe|
-      #qe.qemu_dir = "/usr/share/qemu"
-      qe.qemu_dir = "/usr/local/share/qemu"
       qe.machine = "virt,highmem=on"
       qe.cpu = "max"
       #qe.cpu = "host"
