@@ -10,7 +10,7 @@ on:
       - Vagrantfile.debian-12-arm64
       - .github/workflows/debian-12-arm64.yml
   schedule:
-    - cron: "0 6 3 * *"
+    - cron: "0 6 4 * *"
 
 jobs:
   stage1:
