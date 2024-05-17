@@ -55,6 +55,7 @@ runs:
 
         sudo apt-get install qemu-utils qemu-efi-aarch64 qemu-system-arm
         vagrant plugin install vagrant-qemu
+        vagrant plugin install vagrant-libvirt
 
         wget https://github.com/qemu/qemu/raw/master/pc-bios/edk2-aarch64-code.fd.bz2
         bunzip2 edk2-aarch64-code.fd.bz2
