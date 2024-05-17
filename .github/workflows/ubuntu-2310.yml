@@ -9,8 +9,6 @@ on:
     paths:
       - Vagrantfile.ubuntu-2310
       - .github/workflows/ubuntu-2310.yml
-      - actions/kvm/action.yml
-      - run_v2.sh
   schedule:
     - cron: "0 6 15 * *"
 
