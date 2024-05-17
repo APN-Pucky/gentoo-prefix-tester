@@ -52,6 +52,7 @@ runs:
         sudo usermod -a -G libvirt $USER
         sudo usermod -a -G libvirt-qemu $USER
         sudo systemctl restart libvirtd
+        sudo apt-get install qemu-utils qemu-efi-aarch64 qemu-system-arm
         vagrant plugin install vagrant-qemu
 
     - name: Cache Vagrant boxes
