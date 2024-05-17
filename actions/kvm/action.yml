@@ -60,6 +60,10 @@ runs:
         bunzip2 edk2-aarch64-code.fd.bz2
         sudo mv edk2-aarch64-code.fd /usr/share/qemu/edk2-aarch64-code.fd
 
+        wget https://github.com/qemu/qemu/raw/master/pc-bios/edk2-arm-vars.fd.bz2
+        bunzip2 edk2-arm-vars.fd.bz2
+        sudo mv edk2-arm-vars.fd /usr/share/qemu/edk2-arm-vars.fd
+
     - name: Cache Vagrant boxes
       id: cache-vagrant
       if: ${{ inputs.VAGRANTFILE != 'LOCAL' }}
