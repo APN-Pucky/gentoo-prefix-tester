@@ -14,7 +14,7 @@ on:
 
 jobs:
   stage1:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
         with:
@@ -25,7 +25,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
@@ -37,7 +37,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
@@ -49,7 +49,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
