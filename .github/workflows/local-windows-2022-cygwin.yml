@@ -2,11 +2,14 @@ name: windows-2022-cygwin
 
 on:
   push:
-    branches: ["main"]
+    # This disables the workflow since main is the default.
+    # Windows cygwin prefix is maintained by noone so no need to flood bugzilla.
+    branches: ["master"] 
+    #branches: ["main"]
     paths:
-      - .github/workflows/windows-2022-cygwin.yml
-#  schedule:
-#    - cron: "0 6 17 * *"
+      - .github/workflows/local-windows-2022-cygwin.yml
+  schedule:
+    - cron: "0 6 17 * *"
 
 
 jobs:
@@ -19,7 +22,7 @@ jobs:
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1
-          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
+          APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }} 
 
   stage2:
     runs-on: windows-2022
