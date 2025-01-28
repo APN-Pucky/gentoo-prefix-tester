@@ -16,7 +16,7 @@ jobs:
   stage1:
     runs-on: ubuntu-24.04-arm
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/arm@main
         with:
           VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     needs: stage1
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/arm@main
         with:
           VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     needs: stage2
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/arm@main
         with:
           VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     needs: stage3
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/arm@main
         with:
           VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
