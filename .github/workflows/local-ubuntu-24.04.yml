@@ -1,16 +1,16 @@
-name: bare-ubuntu-24.04-arm
+name: local-ubuntu-24.04
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/bare-ubuntu-24.04-arm.yml
+      - .github/workflows/local-ubuntu-24.04.yml
   schedule:
     - cron: "0 6 16 * *"
 
 jobs:
   stage1:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
@@ -21,7 +21,7 @@ jobs:
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -33,7 +33,7 @@ jobs:
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -45,7 +45,7 @@ jobs:
           #APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main

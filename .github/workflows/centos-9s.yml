@@ -1,56 +1,60 @@
-name: bare-macos-13
+name: centos-9s
+
+env:
+  VFILE: Vagrantfile.centos-9s
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/bare-macos-13.yml
+      - Vagrantfile.centos-9s
+      - .github/workflows/centos-9s.yml
   schedule:
-    - cron: "0 6 15 * *"
+    - cron: "0 6 2 * *"
 
 jobs:
   stage1:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
         with:
-          VAGRANTFILE: LOCAL
+          VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
           PSTAGE: stage0
           ISTAGE: stage1
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     needs: stage1
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
         with:
-          VAGRANTFILE: LOCAL
+          VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
           PSTAGE: stage1
           ISTAGE: stage2
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     needs: stage2
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
         with:
-          VAGRANTFILE: LOCAL
+          VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
           PSTAGE: stage2
           ISTAGE: stage3
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     needs: stage3
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/kvm@main
         with:
-          VAGRANTFILE: LOCAL
+          VAGRANTFILE: ${{ env.VFILE }}
           STABLE: STABLE
           PSTAGE: stage3
           ISTAGE: noninteractive
