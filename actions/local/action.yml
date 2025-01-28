@@ -43,7 +43,9 @@ runs:
       with:
         path: gentoo-prefix-${{ inputs.ISTAGE }}
         key: ${{ runner.os }}-${{ inputs.VAGRANTFILE }}-${{ inputs.STABLE }}-${{ inputs.ISTAGE }}-${{ github.run_id }}
-
+    - name: Print env etc. debug infos
+      shell: bash
+      run: printenv
     - name: run bootstrap
       shell: bash
       id: run
