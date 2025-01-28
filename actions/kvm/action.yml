@@ -45,7 +45,7 @@ runs:
       run: |
         sudo apt-get update
         sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-dev qemu-kvm qemu-utils ruby-dev
-        sudo apt-get install -y libvirt-daemon-system libvirt-clients
+        sudo apt-get install -y libvirt-daemon-system vagrant libvirt-clients
         sudo apt-get install -y virtualbox
         sudo systemctl enable --now libvirtd
         sudo usermod -a -G kvm $USER
