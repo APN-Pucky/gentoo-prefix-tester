@@ -10,7 +10,7 @@ on:
       - Vagrantfile.fedora-39
       - .github/workflows/fedora-39.yml
   schedule:
-    - cron: "0 6 10 * *"
+    - cron: "0 6 11 * *"
 
 jobs:
   stage1:
