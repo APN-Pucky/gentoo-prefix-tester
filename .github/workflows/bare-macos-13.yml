@@ -1,10 +1,10 @@
-name: macos-13
+name: bare-macos-13
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/macos-13.yml
+      - .github/workflows/bare-macos-13.yml
   schedule:
     - cron: "0 6 15 * *"
 

@@ -1,16 +1,16 @@
-name: macos-latest-dev
+name: bare-macos-14
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/macos-latest.yml
+      - .github/workflows/bare-macos-14.yml
   schedule:
-    - cron: "0 6 25 * *"
+    - cron: "0 6 17 * *"
 
 jobs:
   stage1:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
@@ -21,7 +21,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage2:
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -33,7 +33,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage3:
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -45,7 +45,7 @@ jobs:
           APIKEY: ${{ secrets.GENTOO_BUGZILLA_API_KEY }}
 
   stage4:
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
