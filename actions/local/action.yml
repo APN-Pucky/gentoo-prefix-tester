@@ -53,19 +53,19 @@ runs:
       continue-on-error: true
 
     - name: Upload full.log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: full_log
         path: full*
 
     - name: Upload build.log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build_log
         path: build*
 
     - name: Upload info.log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: info_log
         path: info*
