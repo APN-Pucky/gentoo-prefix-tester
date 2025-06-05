@@ -4,6 +4,7 @@ env:
   VFILE: Vagrantfile.debian-12
 
 on:
+  workflow_dispatch:
   push:
     branches: ["main"]
     paths:
