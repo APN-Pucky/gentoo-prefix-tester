@@ -28,6 +28,7 @@ else
     if [ "$VAGRANT_VAGRANTFILE" = "LOCAL" ]
     then
         # use the local system
+	VAGRANTVERSION="No vagrant version (bare)."
         VAGRANTCMD="eval"
         VAGRANTREMOTE=""
         #VAGRANTSCP="scp -r "
@@ -35,6 +36,7 @@ else
         VAGRANTSCPE="ssh"
         OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
     else
+	VAGRANTVERSION="$(vagrant --version)"
         VAGRANTCMD="vagrant ssh -c"
         VAGRANTREMOTE="default:"
         OS="$(grep "config.vm.box" $VAGRANT_VAGRANTFILE | sed 's/.*= \"\(.*\)\"/\1/' | sed 's/\//_/g' )"
@@ -102,7 +104,7 @@ then
 
     # Create info log
     echo "System:"  >> "info_${SUFFIX}.log"
-    echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
+    echo "${VAGRANTVERSION}"  >> "info_${SUFFIX}.log"
     echo "$OS $STABLE prefix" >> "info_${SUFFIX}.log" # CRITICAL: this is used by report_v2.sh to search for already reported bugs
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "MD5SUM bootstrap-prefix.sh: $($VAGRANTCMD 'cat bootstrap-prefix.md5sum')" >> "info_${SUFFIX}.log"
@@ -132,7 +134,7 @@ else
     echo "This bug seems to be resolved for $OS $STABLE prefix"  >> "info_${SUFFIX}.log" # CRITICAL: this is used by resolve_v2.sh to search for already resolved bugs
     echo ""  >> "info_${SUFFIX}.log"
     echo "System:"  >> "info_${SUFFIX}.log"
-    echo "$(vagrant --version)" >> "info_${SUFFIX}.log"
+    echo "${VAGRANTVERSION}"  >> "info_${SUFFIX}.log"
     echo "$($VAGRANTCMD 'uname -a')" >> "info_${SUFFIX}.log"
     echo "MD5SUM bootstrap-prefix.sh: $($VAGRANTCMD 'cat bootstrap-prefix.md5sum')" >> "info_${SUFFIX}.log"
     echo "bootstrap-prefix.sh in mode $STABLE for $STAGE (lower ones before)" >> "info_${SUFFIX}.log"
