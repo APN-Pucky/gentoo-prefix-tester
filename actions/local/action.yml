@@ -55,19 +55,19 @@ runs:
     - name: Upload full.log
       uses: actions/upload-artifact@v4
       with:
-        name: full_log
+        name: full_log_${{ inputs.ISTAGE }}
         path: full*
 
     - name: Upload build.log
       uses: actions/upload-artifact@v4
       with:
-        name: build_log
+        name: build_log_${{ inputs.ISTAGE }}
         path: build*
 
     - name: Upload info.log
       uses: actions/upload-artifact@v4
       with:
-        name: info_log
+        name: info_log_${{ inputs.ISTAGE }}
         path: info*
 
     - name: Check on failures
