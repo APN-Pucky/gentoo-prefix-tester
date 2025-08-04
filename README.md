@@ -2,9 +2,9 @@
 
 ## Gentoo Bugzilla
 
-[Open Bugs](https://bugs.gentoo.org/buglist.cgi?component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844761&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
+[Open Bugs](https://bugs.gentoo.org/buglist.cgi?component=Prefix%20Support&email1=apn-pucky@gentoo.org&emailreporter1=1&emailtype1=substring&f1=reporter&list_id=6844761&o1=equals&query_format=advanced&resolution=---&short_desc=bootstrap-prefix.sh%20fails&short_desc_type=allwordssubstr&v1=%25user%25)
 
-[Resolved Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=RESOLVED&component=Prefix%20Support&email1=alexander%40neuwirth-informatik.de&emailcc1=1&emailtype1=substring&f1=reporter&list_id=6844770&o1=equals&query_format=advanced&v1=%25user%25)
+[Resolved Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=RESOLVED&component=Prefix%20Support&email1=apn-pucky@gentoo.org&emailcc1=1&emailtype1=substring&f1=reporter&list_id=6844770&o1=equals&query_format=advanced&v1=%25user%25)
 
 ## Test map
 
