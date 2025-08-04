@@ -1,10 +1,10 @@
-name: local-ubuntu-24.04
+name: docker-debian-13
 
 on:
   push:
     branches: ["main"]
     paths:
-      - .github/workflows/docker-debian-12.yml
+      - .github/workflows/docker-debian-13.yml
       - actions/local/action.yml
   schedule:
     - cron: "0 6 17 * *"
@@ -13,7 +13,7 @@ jobs:
   stage1:
     runs-on: ubuntu-latest
     container:
-      image: debian:12
+      image: debian:trixie
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
         with:
@@ -26,7 +26,7 @@ jobs:
   stage2:
     runs-on: ubuntu-latest
     container:
-      image: debian:12
+      image: debian:trixie
     needs: stage1
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -40,7 +40,7 @@ jobs:
   stage3:
     runs-on: ubuntu-latest
     container:
-      image: debian:12
+      image: debian:trixie
     needs: stage2
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
@@ -54,7 +54,7 @@ jobs:
   stage4:
     runs-on: ubuntu-latest
     container:
-      image: debian:12
+      image: debian:trixie
     needs: stage3
     steps:
       - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
