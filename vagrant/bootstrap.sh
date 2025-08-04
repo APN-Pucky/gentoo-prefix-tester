@@ -5,6 +5,7 @@ if command -v dnf &> /dev/null; then
     if command -v sudo &> /dev/null; then
         echo "Sudo is already installed"
     else
+        dnf check-update
         # install sudo
         dnf install -y sudo
     fi
@@ -14,6 +15,7 @@ elif command -v apt-get &> /dev/null; then
     if command -v sudo &> /dev/null; then
         echo "Sudo is already installed"
     else
+        apt-get update
         # install sudo
         apt-get install -y sudo
     fi
