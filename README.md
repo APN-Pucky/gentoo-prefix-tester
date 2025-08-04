@@ -33,7 +33,7 @@ Pleas check the Actions tab for the latest results.
 
 # Issues
 
-* Github CI times out after ~6h
+* Github CI times out after ~6h = 360min
 
 # Related
 
