@@ -7,7 +7,7 @@ on:
       - .github/workflows/docker-debian-13.yml
       - actions/docker/action.yml
   schedule:
-    - cron: "0 6 18 * *"
+    - cron: "0 6 19 * *"
 
 jobs:
   stage1:
