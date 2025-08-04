@@ -49,7 +49,7 @@ runs:
     - name: run bootstrap
       shell: bash
       id: run
-      run: unset PKG_CONFIG_PATH && ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      run: unset PKG_CONFIG_PATH && unset LD_LIBRARY_PATH && unset DYLD_LIBRARY_PATH && ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
       continue-on-error: true
 
     - name: Upload full.log

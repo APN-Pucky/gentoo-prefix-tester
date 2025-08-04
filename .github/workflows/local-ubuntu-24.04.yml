@@ -9,10 +9,6 @@ on:
   schedule:
     - cron: "0 6 16 * *"
 
-env:
-  LD_LIBRARY_PATH: ""
-  DYLD_LIBRARY_PATH: ""
-
 jobs:
   stage1:
     runs-on: ubuntu-24.04
