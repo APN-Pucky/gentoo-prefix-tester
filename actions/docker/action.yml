@@ -36,7 +36,7 @@ runs:
 
     - name: Fix to run as root in wsl
       shell: bash
-      run: wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && sed -i 's/UID/NOUID/g' bootstrap-prefix.sh
+      run: wget https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh && sed -i 's/UID/NOUID/g' bootstrap-prefix.sh && chmod +x bootstrap-prefix.sh
 
     - name: Cache gentoo-prefix ${{ inputs.PSTAGE }}
       id: cache-pstage
