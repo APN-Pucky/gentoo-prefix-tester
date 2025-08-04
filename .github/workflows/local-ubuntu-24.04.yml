@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - .github/workflows/local-ubuntu-24.04.yml
+      - actions/local/action.yml
   schedule:
     - cron: "0 6 16 * *"
 
