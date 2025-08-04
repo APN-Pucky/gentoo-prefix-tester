@@ -5,7 +5,7 @@ on:
     branches: ["main"]
     paths:
       - .github/workflows/docker-debian-13.yml
-      - actions/local/action.yml
+      - actions/docker/action.yml
   schedule:
     - cron: "0 6 17 * *"
 
@@ -15,7 +15,7 @@ jobs:
     container:
       image: debian:trixie
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/docker@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -29,7 +29,7 @@ jobs:
       image: debian:trixie
     needs: stage1
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/docker@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -43,7 +43,7 @@ jobs:
       image: debian:trixie
     needs: stage2
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/docker@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
@@ -57,7 +57,7 @@ jobs:
       image: debian:trixie
     needs: stage3
     steps:
-      - uses: APN-Pucky/gentoo-prefix-tester/actions/local@main
+      - uses: APN-Pucky/gentoo-prefix-tester/actions/docker@main
         with:
           VAGRANTFILE: LOCAL
           STABLE: STABLE
