@@ -23,12 +23,10 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
+
     - name: Run bootstrap.sh
       shell: bash
       run: ./vagrant/bootstrap.sh
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
 
     - name: Install pybugz
       shell: bash
@@ -56,7 +54,7 @@ runs:
     - name: run bootstrap
       shell: bash
       id: run
-      run: unset PKG_CONFIG_PATH && unset LD_LIBRARY_PATH && unset DYLD_LIBRARY_PATH && ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      run: ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
       continue-on-error: true
 
     - name: Upload full.log
