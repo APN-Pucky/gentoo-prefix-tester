@@ -34,7 +34,15 @@ else
         #VAGRANTSCP="scp -r "
         VAGRANTSCP="rsync -Wa -e "
         VAGRANTSCPE="ssh"
-        OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
+        # Docker compatible
+        if [ -f /etc/os-release ]; then
+            OS="$(grep '^PRETTY_NAME=' /etc/os-release | cut -d= -f2- | tr -d '"' | sed -e 's/[\/ #:()]/_/g')"
+            if [ -f "/.dockerenv" ] || grep -qE '(docker|kubepods)' /proc/1/cgroup 2>/dev/null; then
+                OS="${OS}_Docker"
+            fi
+        else
+            OS="$(uname -a | sed 's/\//_/g' | sed 's/ /_/g' | sed 's/#/_/g' | sed 's/:/_/g' )"
+        fi
     else
 	VAGRANTVERSION="$(vagrant --version)"
         VAGRANTCMD="vagrant ssh -c"
