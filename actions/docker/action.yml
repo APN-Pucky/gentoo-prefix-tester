@@ -30,7 +30,7 @@ runs:
 
     - name: Install pybugz
       shell: bash
-      run: python3 -m pip install git+https://github.com/williamh/pybugz.git
+      run: python3 -m pip install git+https://github.com/williamh/pybugz.git --break-system-packages
 
     - name: Fix to run as root in wsl
       shell: bash
