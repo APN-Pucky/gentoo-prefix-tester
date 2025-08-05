@@ -70,8 +70,8 @@ then
     $VAGRANTCMD "sed -i.bak 's/export STABLE_PREFIX=.*//g' bootstrap-prefix.sh" >> "full_${SUFFIX}.log" || die
 fi
 
-# Copy prev stages
-# does previois gentoo-prefix-stage exist?
+# Copy previous stages
+# does previous gentoo-prefix-stage exist?
 PSTAGE=${STAGE/1/0}
 PSTAGE=${PSTAGE/2/1}
 PSTAGE=${PSTAGE/3/2}
