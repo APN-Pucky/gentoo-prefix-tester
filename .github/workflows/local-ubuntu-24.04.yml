@@ -7,7 +7,7 @@ on:
       - .github/workflows/local-ubuntu-24.04.yml
       - actions/local/action.yml
   schedule:
-    - cron: "0 6 16 * *"
+    - cron: "0 6 17 * *"
 
 jobs:
   stage1:
