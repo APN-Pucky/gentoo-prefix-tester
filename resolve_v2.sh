@@ -23,7 +23,7 @@ BUGZ="bugz --key $KEY --config-file gentoo.conf --connection Gentoo"
 
 
 # Search for existing bugs
-$BUGZ search "$TITLE" -r "alexander@neuwirth-informatik.de" | tee bgo.out
+$BUGZ search "$TITLE" -r "apn-pucky@gentoo.org" | tee bgo.out
 echo "Searching for: $TITLE"
 TITLEBUG=$( grep -c "$TITLE" bgo.out )
 if [ $TITLEBUG -ge 1 ] ; then
