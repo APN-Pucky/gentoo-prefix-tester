@@ -23,13 +23,6 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-
-    - name: Install pybugz
-      shell: bash
-      run: python -m pip install git+https://github.com/williamh/pybugz.git
 
     # https://github.blog/changelog/2024-04-02-github-actions-hardware-accelerated-android-virtualization-now-available/
     - name: Enable KVM group perms
@@ -94,7 +87,20 @@ runs:
     - name: run bootstrap
       shell: bash
       id: run
-      run: ./run_v2.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      run: ./run_v3.sh  ${{ inputs.VAGRANTFILE }} ${{ inputs.APIKEY }} ${{ inputs.STABLE }} "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" ${{ inputs.ISTAGE }}
+      continue-on-error: true
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install pybugz
+      shell: bash
+      run: python -m pip install git+https://github.com/williamh/pybugz.git
+
+    - name: Call report/resolve scripts
+      shell: bash
+      run: ./re_*.sh
       continue-on-error: true
 
     - name: Upload full.log
