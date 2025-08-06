@@ -6,6 +6,12 @@
 
 [Resolved Bugs](https://bugs.gentoo.org/buglist.cgi?bug_status=RESOLVED&component=Prefix%20Support&email1=apn-pucky@gentoo.org&emailcc1=1&emailtype1=substring&f1=reporter&list_id=6844770&o1=equals&query_format=advanced&v1=%25user%25)
 
+## Status
+
+[![docker-debian-13](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/docker-debian-13.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/docker-debian-13.yml)
+
+[![local-ubuntu-24.04](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml)
+
 ## Test map
 
 Test gentoo-prefix on different operating systems using vagrant in GitHub Actions CI.
