@@ -1,4 +1,4 @@
-name: gentoo
+name: vagrant-gentoo
 
 env:
   VFILE: Vagrantfile.gentoo
@@ -9,7 +9,7 @@ on:
     branches: ["main"]
     paths:
       - Vagrantfile.gentoo
-      - .github/workflows/gentoo.yml
+      - .github/workflows/vagrant-gentoo.yml
       - actions/kvm/action.yml
   schedule:
     - cron: "0 6 8 * *"
