@@ -10,7 +10,11 @@
 
 [![docker-debian-13](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/docker-debian-13.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/docker-debian-13.yml)
 
+[![local-macos-latest](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-macos-latest.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-macos-latest.yml)
+
 [![local-ubuntu-24.04](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml)
+
+
 
 ## Test map
 
