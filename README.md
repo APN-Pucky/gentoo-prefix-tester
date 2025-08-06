@@ -14,6 +14,7 @@
 
 [![local-ubuntu-24.04](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/local-ubuntu-24.04.yml)
 
+[![vagrant-gentoo](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/vagrant-gentoo.yml/badge.svg)](https://github.com/APN-Pucky/gentoo-prefix-tester/actions/workflows/vagrant-gentoo.yml)
 
 
 ## Test map
